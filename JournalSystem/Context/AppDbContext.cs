@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace JournalSystem
+namespace JournalSystem.Context
 {
     public class AppDbContext:IdentityDbContext<IdentityUser>
     {

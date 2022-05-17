@@ -28,7 +28,7 @@ namespace JournalSystem.Controllers
             {   //pass items to be listed or to choose from
                 
 
-            });
+            }); 
 
         }
 

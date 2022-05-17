@@ -1,4 +1,5 @@
 ﻿using JournalSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,7 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace JournalSystem.Controllers
-{
+{  
+    
     public class HomeController : Controller
     {
        

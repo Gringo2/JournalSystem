@@ -7,5 +7,6 @@ namespace JournalSystem.Entities
         public Guid CommentId { get; set; }
         public Guid Commentor { get; set; }
         public Guid CommentIntendedfor { get; set; }
+    }
 
 }

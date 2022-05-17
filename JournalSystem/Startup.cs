@@ -1,6 +1,7 @@
 using JournalSystem.Context;
 using JournalSystem.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,17 +62,18 @@ namespace JournalSystem
 
                 ;
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
-            {
-                options.Authority = "https://localhost:5001";
-                options.ClientId = "interactive";
-                options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
-                options.ResponseType = "code";
+           .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+           {
+               options.Authority = "https://localhost:5001";
+               options.ClientId = "interactive";
+               options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
+               options.ResponseType = "code";
 
-                options.SaveTokens = true;
+               options.SaveTokens = true;
 
 
-            });
+           });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -38,11 +38,11 @@ namespace JournalSystem
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<AppDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddEntityFrameworkStores<AppDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //   .AddEntityFrameworkStores<AppDbContext>();
 
             services.AddDbContext<DataDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DataConnection")));
@@ -54,6 +54,7 @@ namespace JournalSystem
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JournalAPI", Version = "v1" });
             });
+
             //Identity
             services.AddAuthentication(options =>
             {
@@ -82,6 +83,8 @@ namespace JournalSystem
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PaperCatalog v1"));
             }
             else
             {

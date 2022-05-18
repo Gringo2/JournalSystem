@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace JournalSystem.Controllers
 {
+
       public class PaperUpload : Controller
     {
         private readonly IRepository<Paper> _paperRepo;

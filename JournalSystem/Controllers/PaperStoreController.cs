@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 namespace JournalSystem.Controllers
 {
     [AllowAnonymous]
+    [Route("api/[controller]")]
+    [ApiController]
     public class PaperStoreController : ControllerBase
     {
         private readonly IRepository<Paper> _paperRepo;
@@ -32,7 +34,7 @@ namespace JournalSystem.Controllers
         //    });
         //}
         
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<PaperDto>>> GetAll()
         {
             IEnumerable<Paper> papers = await _paperRepo.GetAll();

@@ -2,11 +2,13 @@
 
 namespace JournalSystem.Entities
 {
-    public class Comments
+    public class Comments:User
     {
-        public Guid CommentId { get; set; }
-        public Guid Commentor { get; set; }
+        
         public Guid CommentIntendedfor { get; set; }
+        public Paper Paper { get; set; }
+
+       
     }
 
 }

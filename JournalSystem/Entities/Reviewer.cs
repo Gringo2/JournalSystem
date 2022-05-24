@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JournalSystem.Entities
 {
-    public class Reviewer : ApplicationUser
+    public class Reviewer
     {
         public Guid ReviewerId { get; set; }
         public IEnumerable<Paper> Papers { get; set; }

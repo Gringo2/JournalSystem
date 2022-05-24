@@ -20,30 +20,30 @@ namespace Journal.web.Services
         //adds new paper
         public async Task AddPaper(PaperDto obj)
         {
-            await _client.PostAsJson("/api/PaperStore/Submit", obj);
+            await _client.PostAsJson("https://localhost:44225/api/PaperStore/SubmitPaper", obj);
         }
 
         public async Task DeletePaper(Guid id)
         {
-            await _client.DeleteAsync("/api/PaperStore/DeleteProduct/{id}");
+            await _client.DeleteAsync("https://localhost:44225/api/PaperStore/DeleteProduct/{id}");
         }
 
         public async Task<IEnumerable<PaperDto>> GetallPapers()
         {
-            var response = await _client.GetAsync("/api/PaperStore/GetAll");
+            var response = await _client.GetAsync("https://localhost:44225/api/PaperStore/GetAll");
             return await response.ReadContentAs<List<PaperDto>>();
         }
 
         public async Task<PaperDto> GetById(object id)
         {
-            var response = await _client.GetAsync($"/api/PaperStore/GetPaperByID/{id}");
+            var response = await _client.GetAsync($"https://localhost:44225/api/PaperStore/GetPaperByID/{id}");
             return await response.ReadContentAs<PaperDto>();
         }
 
         public async Task UpdatePaper(PaperDto obj)
         {
             var pid = obj.PaperId;
-            var response = await _client.PostAsJson("api/PaperStore/SubmitPaper/{pid}",obj);
+            var response = await _client.PostAsJson("https://localhost:44225/api/PaperStore/SubmitPaper/{pid}", obj);
         }
     }
 }

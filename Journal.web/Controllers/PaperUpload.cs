@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Journal.web.Models;
+using Journal.web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,12 +12,12 @@ namespace JournalSystem.Controllers
 
       public class PaperUpload : Controller
     {
-
+        private readonly IPaperStoreService _paperstoreservice;
         private readonly IMapper _mapper;
 
-        public PaperUpload(IMapper mapper)
+        public PaperUpload(PaperStoreService paperStoreService  ,IMapper mapper)
         {
-            
+            _paperstoreservice = paperStoreService;
             _mapper = mapper;
         }
         public  IActionResult AddPaper()
@@ -60,7 +61,8 @@ namespace JournalSystem.Controllers
 
            
             paper.File_path = files.FileName;
-            //await _paperRepo.Insert(paper);
+            await _paperstoreservice.AddPaper(paper);
+            
             return RedirectToAction("ProductSaved");
         }
     }

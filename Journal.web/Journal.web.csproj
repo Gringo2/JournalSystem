@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Api\" />
+    <Folder Include="wwwroot\Papers\" />
   </ItemGroup>
 
 </Project>

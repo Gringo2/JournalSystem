@@ -13,6 +13,7 @@ namespace JournalSystem.Entities
         public int Status { get; set; }
         public string ImgUrl { get; set; }
         public string File_path { get; set; }
+        public string Article_File_path { get; set; }
         public int Version { get; set; }
         public int Size { get; set; }
         public int Page_size { get; set; }

@@ -31,8 +31,9 @@ namespace Journal.web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<TokenInjectionService>();
 
-            services.AddHttpClient<IPaperStoreService, PaperStoreService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225"));
+
+            services.AddSingleton<PaperStoreService>();
+            services.AddHttpClient<IPaperStoreService, PaperStoreService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

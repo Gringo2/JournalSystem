@@ -67,10 +67,10 @@ namespace JournalSystem.Controllers
             return Ok(_mapper.Map<PaperDto>(await _paperRepo.GetById(pId)));
         }
 
-        [HttpDelete("DeleteProduct/{productId}")]
-        public async Task<ActionResult<PaperDto>> DeleteProduct(Guid productId)
+        [HttpDelete("DeletePaper/{pId}")]
+        public async Task<ActionResult<PaperDto>> DeleteProduct(Guid pId)
         {
-            var deletable = await _paperRepo.Delete(productId);
+            var deletable = await _paperRepo.Delete(pId);
             var map = _mapper.Map<PaperDto>(deletable);
 
             if (deletable == null)

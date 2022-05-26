@@ -9,7 +9,6 @@ namespace JournalSystem.Entities
         public Paper Paper { get; set; }
         public string FilePath { get; set; }
         public int Version { get; set; }
-        public int Size { get; set; }
         public DateTime CreatedDate { get; set; }
 
 

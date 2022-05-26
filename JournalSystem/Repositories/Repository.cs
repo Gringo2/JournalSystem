@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace JournalSystem.Repositories
@@ -55,6 +56,10 @@ namespace JournalSystem.Repositories
                 return existing;
             }
             
+        }
+        public Task<T> LoadRelatedAsync()
+        {
+            throw new NotImplementedException();
         }
 
         //public async Task<T> GetByCategory(object categoryId)

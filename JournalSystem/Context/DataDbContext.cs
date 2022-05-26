@@ -14,13 +14,13 @@ namespace JournalSystem.Context
         
         
 
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<ArticleTemplate> ArticleTemplates { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comments> Comments { get; set; }
-        //public DbSet<EditDecisions> EditDecisions { get; set; }
-        public DbSet<Editor> Editors { get; set; }
-        //public DbSet<EmailTemplates> EmailTemplates { get; set; }
+        public DbSet<EditDecisions> EditDecisions { get; set; }
         
+        //public DbSet<EmailTemplates> EmailTemplates { get; set; }
+        public DbSet<Hop> Hops { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         //public DbSet<Issues> Issues { get; set; }
         
@@ -30,7 +30,8 @@ namespace JournalSystem.Context
         
         //public DbSet<Recommendation> Recommendations { get; set; }
         
-        public DbSet<Reviewer> Reviewers { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<User> Users { get; set; }
         //public DbSet<Reviewrounds> Reviewersrounds { get; set; }
         
 

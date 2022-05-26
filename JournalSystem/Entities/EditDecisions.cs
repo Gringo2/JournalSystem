@@ -2,6 +2,12 @@
 {
     public class EditDecisions
     {
+
+        public int  Id { get; set; }
+        public string Decision_Name { get; set; }
+
+        //data to be seeded
+
         //public const accept = 1;
         //public const pending_revisions = 2;
         //public const resubmit = 3;

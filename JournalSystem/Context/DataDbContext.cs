@@ -14,28 +14,26 @@ namespace JournalSystem.Context
         
         
 
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<ArticleTemplate> ArticleTemplates { get; set; }
         public DbSet<Category> Categories { get; set; }
-        //public DbSet<Comments> Comments { get; set; }
-        //public DbSet<EditAssignment> EditAssignments { get; set; }
-        //public DbSet<EditDecisions> EditDecisions { get; set; }
-        //public DbSet<Editor> Editors { get; set; }
+        public DbSet<Comments> Comments { get; set; }
+        public DbSet<EditDecisions> EditDecisions { get; set; }
+        
         //public DbSet<EmailTemplates> EmailTemplates { get; set; }
-        //public DbSet<Field> Fields { get; set; }
+        public DbSet<Hop> Hops { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         //public DbSet<Issues> Issues { get; set; }
-        //public DbSet<Paper> Journals { get; set; }
-        //public DbSet<Journaleventlog> JournaleventLlogs { get; set; }
+        
+       
         //public DbSet<NotificationStatus> NotificationStatuses { get; set; }
         public DbSet<Paper> Papers { get; set; }
-        //public DbSet<PublishedPapers> PublishedPapers { get; set; }
+        
         //public DbSet<Recommendation> Recommendations { get; set; }
-        //public DbSet<Review> Reviews { get; set; }
-        //public DbSet<Reviewer> Reviewers { get; set; }
+        
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<User> Users { get; set; }
         //public DbSet<Reviewrounds> Reviewersrounds { get; set; }
-        //public DbSet<Roles> Roles { get; set; }
-        //public DbSet<Title> Titles { get; set; }
-        //public DbSet<User> Users { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

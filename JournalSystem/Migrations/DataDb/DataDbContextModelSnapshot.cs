@@ -16,74 +16,33 @@ namespace JournalSystem.Migrations.DataDb
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.16")
+                .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AuthorPaper", b =>
+            modelBuilder.Entity("JournalSystem.Entities.ArticleTemplate", b =>
                 {
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PapersPaperId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AuthorId", "PapersPaperId");
-
-                    b.HasIndex("PapersPaperId");
-
-                    b.ToTable("AuthorPaper");
-                });
-
-            modelBuilder.Entity("CategoryPaper", b =>
-                {
-                    b.Property<Guid>("CategoriesCategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PapersPaperId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CategoriesCategoryId", "PapersPaperId");
-
-                    b.HasIndex("PapersPaperId");
-
-                    b.ToTable("CategoryPaper");
-                });
-
-            modelBuilder.Entity("CategoryTopic", b =>
-                {
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TopicsTopicId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CategoryId", "TopicsTopicId");
-
-                    b.HasIndex("TopicsTopicId");
-
-                    b.ToTable("CategoryTopic");
-                });
-
-            modelBuilder.Entity("JournalSystem.Entities.Author", b =>
-                {
-                    b.Property<Guid>("AuthorId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("InstitutionId")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PaperId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("f_Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Version")
+                        .HasColumnType("int");
 
-                    b.Property<string>("l_name")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("AuthorId");
+                    b.HasIndex("PaperId")
+                        .IsUnique();
 
-                    b.HasIndex("InstitutionId");
-
-                    b.ToTable("Authors");
+                    b.ToTable("ArticleTemplates");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Category", b =>
@@ -95,15 +54,76 @@ namespace JournalSystem.Migrations.DataDb
                     b.Property<string>("Category_name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("description")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Comments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment_Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PaperId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaperId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.EditDecisions", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Decision_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EditDecisions");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Hop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("From")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("To")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hops");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Institution", b =>
@@ -150,13 +170,16 @@ namespace JournalSystem.Migrations.DataDb
                     b.Property<string>("File_path")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("HopId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Hop_count")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Page_size")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Size")
+                    b.Property<int>("No_Pages")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -167,9 +190,6 @@ namespace JournalSystem.Migrations.DataDb
 
                     b.Property<Guid?>("TopicId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Tracking_no")
-                        .HasColumnType("int");
 
                     b.Property<int>("Version")
                         .HasColumnType("int");
@@ -190,66 +210,102 @@ namespace JournalSystem.Migrations.DataDb
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PaperId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Topic_name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TopicId");
 
-                    b.ToTable("Topic");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Topics");
                 });
 
-            modelBuilder.Entity("AuthorPaper", b =>
+            modelBuilder.Entity("JournalSystem.Entities.User", b =>
                 {
-                    b.HasOne("JournalSystem.Entities.Author", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("JournalSystem.Entities.Paper", null)
-                        .WithMany()
-                        .HasForeignKey("PapersPaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("InstitutionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("InstitutionId");
+
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CategoryPaper", b =>
+            modelBuilder.Entity("PaperUser", b =>
                 {
-                    b.HasOne("JournalSystem.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("PapersPaperId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasOne("JournalSystem.Entities.Paper", null)
-                        .WithMany()
-                        .HasForeignKey("PapersPaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<Guid>("UsersUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PapersPaperId", "UsersUserId");
+
+                    b.HasIndex("UsersUserId");
+
+                    b.ToTable("PaperUser");
                 });
 
-            modelBuilder.Entity("CategoryTopic", b =>
+            modelBuilder.Entity("JournalSystem.Entities.ArticleTemplate", b =>
                 {
-                    b.HasOne("JournalSystem.Entities.Category", null)
-                        .WithMany()
+                    b.HasOne("JournalSystem.Entities.Paper", "Paper")
+                        .WithOne("Template")
+                        .HasForeignKey("JournalSystem.Entities.ArticleTemplate", "PaperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paper");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Comments", b =>
+                {
+                    b.HasOne("JournalSystem.Entities.Paper", "Paper")
+                        .WithMany("Comments")
+                        .HasForeignKey("PaperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paper");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Paper", b =>
+                {
+                    b.HasOne("JournalSystem.Entities.Topic", "Topic")
+                        .WithMany("Papers")
+                        .HasForeignKey("TopicId");
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Topic", b =>
+                {
+                    b.HasOne("JournalSystem.Entities.Category", "Category")
+                        .WithMany("Topics")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JournalSystem.Entities.Topic", null)
-                        .WithMany()
-                        .HasForeignKey("TopicsTopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("JournalSystem.Entities.Author", b =>
+            modelBuilder.Entity("JournalSystem.Entities.User", b =>
                 {
                     b.HasOne("JournalSystem.Entities.Institution", "Institution")
-                        .WithMany("Authors")
+                        .WithMany("Users")
                         .HasForeignKey("InstitutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -257,16 +313,36 @@ namespace JournalSystem.Migrations.DataDb
                     b.Navigation("Institution");
                 });
 
-            modelBuilder.Entity("JournalSystem.Entities.Paper", b =>
+            modelBuilder.Entity("PaperUser", b =>
                 {
-                    b.HasOne("JournalSystem.Entities.Topic", null)
-                        .WithMany("Papers")
-                        .HasForeignKey("TopicId");
+                    b.HasOne("JournalSystem.Entities.Paper", null)
+                        .WithMany()
+                        .HasForeignKey("PapersPaperId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JournalSystem.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Category", b =>
+                {
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Institution", b =>
                 {
-                    b.Navigation("Authors");
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Paper", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Template");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Topic", b =>

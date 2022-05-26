@@ -58,7 +58,7 @@ namespace Auth
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-                
+
                 options.Authentication = new AuthenticationOptions()
                 {
                     CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
@@ -67,17 +67,20 @@ namespace Auth
 
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
-            }).AddConfigurationStore(options =>
-            {
+                }).AddConfigurationStore(options =>
+                {
                 options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
+                })
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
                         sql => sql.MigrationsAssembly(migrationsAssembly));
                     options.EnableTokenCleanup = true;
-                }).AddAspNetIdentity<ApplicationUser>(); ;
+                }).AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryApiResources(Config.ApiResources)
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.Clients).AddAspNetIdentity<ApplicationUser>(); ;
 
 
 
@@ -117,6 +120,7 @@ namespace Auth
                 endpoints.MapRazorPages();
             });
         }
+        ///Configuration Options
 
         private void InitializeDatabase(IApplicationBuilder app)
         {

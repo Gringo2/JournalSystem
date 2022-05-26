@@ -34,7 +34,7 @@ namespace Journal.web.Services
                 new ClientCredentialsTokenRequest
                 {
                     Address = discoveryDocumentResponse.TokenEndpoint,
-                    ClientId = "client",
+                    ClientId = "m2m.client",
                     ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
                     Scope = "scope1"
                 });

@@ -21,6 +21,6 @@ namespace JournalSystem.Models
         public Guid HopId { get; set; }
         public int Hop_count { get; set; }
         public DateTime Created { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<CategoryDto> Categories { get; set; }
     }
 }

@@ -46,11 +46,13 @@ namespace JournalSystem.Context
             //    {
             //         CategoryId = Guid.NewGuid()
             //    });
+
             //modelBuilder.Entity<Paper>().HasData(
             //       new Paper()
             //       {
             //           PaperId = Guid.NewGuid()
             //       }) ;
+
             //modelBuilder.Entity<Author>().HasData(
             //    new Author()
             //    {
@@ -61,8 +63,7 @@ namespace JournalSystem.Context
             //modelBuilder.Entity<Institution>().HasData(
             //    new Institution()
             //    {
-            //       InstitutionId  = Guid.NewGuid()
-                   
+            //       InstitutionId  = Guid.NewGuid()                   
             //    });
             
         }

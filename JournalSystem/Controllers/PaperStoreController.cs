@@ -50,17 +50,22 @@ namespace JournalSystem.Controllers
             var response = await _paperRepo.GetById(paperId);
             return  Ok(_mapper.Map<PaperDto>(response));
         }
+        [HttpGet("GetPaperByTopic/{TopicId}")]
+        //public async Task<ActionResult<PaperDto>> GetPaperByTopic(Guid TopicId) {
 
+            
+        //    return Ok();
+        //}
         [HttpPost("SubmitPaper")]
         public async Task<ActionResult<PaperDto>> SubmitPaper(Paper paper)
         {
             await _paperRepo.Insert(paper);
-            return CreatedAtAction(nameof(GetPaperByID), new { productId = paper.PaperId }, paper);
+            return CreatedAtAction(nameof(GetPaperByID), new { PaperId = paper.PaperId }, paper);
         }
 
 
         [HttpPut("UpdatePaper/{pId}")]
-        public async Task<ActionResult<PaperDto>> PutProduct(Paper paper)
+        public async Task<ActionResult<PaperDto>> PutPaper(Paper paper)
         {
             var pId = paper.PaperId;
             await _paperRepo.Update(paper);
@@ -68,7 +73,7 @@ namespace JournalSystem.Controllers
         }
 
         [HttpDelete("DeletePaper/{pId}")]
-        public async Task<ActionResult<PaperDto>> DeleteProduct(Guid pId)
+        public async Task<ActionResult<PaperDto>> DeletePaper(Guid pId)
         {
             var deletable = await _paperRepo.Delete(pId);
             var map = _mapper.Map<PaperDto>(deletable);

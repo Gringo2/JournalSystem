@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Journal.web.Models;
 using Journal.web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace JournalSystem.Controllers
 {
-
+     
       public class PaperUpload : Controller
     {
         private readonly IPaperStoreService _paperstoreservice;

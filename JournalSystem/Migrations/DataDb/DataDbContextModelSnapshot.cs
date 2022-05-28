@@ -124,6 +124,32 @@ namespace JournalSystem.Migrations.DataDb
                     b.HasKey("Id");
 
                     b.ToTable("Hops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Reciever = "Editor",
+                            Sender = "Author"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Reciever = "Reviewer",
+                            Sender = "Editor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Reciever = "Editor",
+                            Sender = "Reviewer"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Reciever = "Author",
+                            Sender = "Editor"
+                        });
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Institution", b =>

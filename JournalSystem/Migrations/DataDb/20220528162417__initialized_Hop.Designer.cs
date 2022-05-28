@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JournalSystem.Migrations.DataDb
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220528124629_Add_Seed_Data_To_Hop")]
-    partial class Add_Seed_Data_To_Hop
+    [Migration("20220528162417__initialized_Hop")]
+    partial class _initialized_Hop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,6 +126,32 @@ namespace JournalSystem.Migrations.DataDb
                     b.HasKey("Id");
 
                     b.ToTable("Hops");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Reciever = "Editor",
+                            Sender = "Author"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Reciever = "Reviewer",
+                            Sender = "Editor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Reciever = "Editor",
+                            Sender = "Reviewer"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Reciever = "Author",
+                            Sender = "Editor"
+                        });
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Institution", b =>

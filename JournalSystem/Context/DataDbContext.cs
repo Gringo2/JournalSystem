@@ -23,9 +23,9 @@ namespace JournalSystem.Context
         public DbSet<Hop> Hops { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         //public DbSet<Issues> Issues { get; set; }
-        
-       
-        //public DbSet<NotificationStatus> NotificationStatuses { get; set; }
+
+
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Paper> Papers { get; set; }
         
         //public DbSet<Recommendation> Recommendations { get; set; }
@@ -40,31 +40,31 @@ namespace JournalSystem.Context
             base.OnModelCreating(modelBuilder);
 
             var id = Guid.Parse("{eFB88E29-4744-48C0-94FA-B25B92DEA314}");
-            modelBuilder.Entity<Hop>().HasData(
-                new Hop
-                {
-                    Id = 1,
-                    Sender = "Author",
-                    Reciever = "Editor"
-                }, 
-                new Hop
-                {
-                    Id = 2,
-                    Sender = "Editor",
-                    Reciever = "Reviewer"
-                }, 
-                new Hop
-                {
-                    Id = 3,
-                    Sender = "Reviewer",
-                    Reciever = "Editor"
-                }, 
-                new Hop
-                {
-                    Id = 4,
-                    Sender = "Editor",
-                    Reciever = "Author"
-                });
+            //modelBuilder.Entity<Hop>().HasData(
+            //    new Hop
+            //    {
+            //        Id = 1,
+            //        Sender = "Author",
+            //        Reciever = "Editor"
+            //    }, 
+            //    new Hop
+            //    {
+            //        Id = 2,
+            //        Sender = "Editor",
+            //        Reciever = "Reviewer"
+            //    }, 
+            //    new Hop
+            //    {
+            //        Id = 3,
+            //        Sender = "Reviewer",
+            //        Reciever = "Editor"
+            //    }, 
+            //    new Hop
+            //    {
+            //        Id = 4,
+            //        Sender = "Editor",
+            //        Reciever = "Author"
+            //    });
             
 
 

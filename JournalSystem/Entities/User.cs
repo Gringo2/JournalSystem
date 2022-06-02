@@ -10,5 +10,6 @@ namespace JournalSystem.Entities
         public Guid InstitutionId { get; set; }
         public Institution Institution { get; set; }
         public Guid RoleId { get; set; }
+        public IEnumerable<Hop> Hops { get; set; }
     }
 }

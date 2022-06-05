@@ -13,10 +13,10 @@ namespace JournalSystem.Controllers
      
       public class PaperUpload : Controller
     {
-        private readonly IPaperStoreService _paperstoreservice;
+        private readonly IPaperRequestService _paperstoreservice;
         private readonly IMapper _mapper;
 
-        public PaperUpload(PaperStoreService paperStoreService  ,IMapper mapper)
+        public PaperUpload(PaperRequestService paperStoreService  ,IMapper mapper)
         {
             _paperstoreservice = paperStoreService;
             _mapper = mapper;
@@ -63,7 +63,7 @@ namespace JournalSystem.Controllers
 
             paper.File_path = files.FileName;
         }
-            await _paperstoreservice.AddPaper(paper);
+            //await _paperstoreservice.AddPaper(paper);
             
             return RedirectToAction("ProductSaved");
         }

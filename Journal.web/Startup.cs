@@ -31,9 +31,20 @@ namespace Journal.web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<TokenInjectionService>();
 
+            services.AddHttpClient<IPaperRequestService, PaperRequestService>(c =>
+                c.BaseAddress = new Uri("https://localhost:44225/PaperStore"));
 
-            services.AddSingleton<PaperStoreService>();
-            services.AddHttpClient<IPaperStoreService, PaperStoreService>();
+            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>(c =>
+                c.BaseAddress = new Uri("https://localhost:44225/Category"));
+
+            services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>(c =>
+                c.BaseAddress = new Uri("https://localhost:44225/Institution"));
+
+            services.AddHttpClient<ITopicRequestService, TopicRequestService>(c =>
+                c.BaseAddress = new Uri("https://localhost:44225/Topic"));
+
+            services.AddHttpClient<ICommentRequestService, CommentRequestService>(c =>
+                c.BaseAddress = new Uri("https://localhost:44225/Comment"));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -77,10 +88,16 @@ namespace Journal.web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                name: "Users",
+                areaName: "Dashboards",
+                pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

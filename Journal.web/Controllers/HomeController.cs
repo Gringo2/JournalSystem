@@ -1,4 +1,5 @@
 ﻿using Journal.web.Models;
+using Journal.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,11 @@ namespace Journal.web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPaperRequestService _paperRequestService;
+        public HomeController(ILogger<HomeController> logger, IPaperRequestService paperRequestService)
         {
             _logger = logger;
+            _paperRequestService = paperRequestService;
         }
 
         public IActionResult Index()

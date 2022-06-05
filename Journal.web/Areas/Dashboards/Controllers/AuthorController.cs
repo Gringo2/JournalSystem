@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Journal.web.Areas.Dashboards.Controllers
 {   
-    //[Authorize]
+    [Authorize]
     [Area("Dashboards")]
     [Route("Dashboards/Author")]
     public class AuthorController : Controller

@@ -88,14 +88,16 @@ namespace Journal.web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
+
                 endpoints.MapAreaControllerRoute(
                 name: "Users",
                 areaName: "Dashboards",
-                pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}");
+                pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}").RequireAuthorization();
 
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                
             });
 
         }

@@ -38,7 +38,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
-           
+            var userrole = _idtoken.Claims.Single(x => x.Type == "role");
             var UserId = Guid.Parse(id.Value);
             return View();
 

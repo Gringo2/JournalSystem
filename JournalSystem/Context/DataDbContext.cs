@@ -11,9 +11,6 @@ namespace JournalSystem.Context
 
         }
 
-        
-        
-
         public DbSet<ArticleTemplate> ArticleTemplates { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comments> Comments { get; set; }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Auth.Data
+namespace Auth.Data.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -11,6 +11,8 @@ namespace Auth.Data
         {
         }
 
+        public DbSet<Field> Fields { get; set; }
+        public DbSet<Institution> Institutions { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

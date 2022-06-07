@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using Auth.Data;
+using Auth.Data.Context;
 using Auth.Models;
 using Auth.Services;
 using IdentityServer4;
@@ -82,35 +83,25 @@ namespace Auth
                 .AddInMemoryApiResources(Config.ApiResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>(); ;
+                .AddAspNetIdentity<ApplicationUser>();
+            //adds the integration layer to allow IdentityServer
+            //to access the user data for the ASP.NET Core Identity user database.
 
 
 
-            // not recommended for production - you need to store your key material somewhere secure
+            // not recommended for production - need to store key material somewhere secure
             builder.AddDeveloperSigningCredential();
-
-            //services.AddAuthentication()
-            //    .AddGoogle(options =>
-            //    {
-            //        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-            //        // register your IdentityServer with Google at https://console.developers.google.com
-            //        // enable the Google+ API
-            //        // set the redirect URI to https://localhost:5001/signin-google
-            //        options.ClientId = "copy client ID from Google here";
-            //        options.ClientSecret = "copy client secret from Google here";
-            //    });
             
         }   
 
-        public void Configure(IApplicationBuilder app, IServiceProvider services)
+        public void Configure(IApplicationBuilder app)// IServiceProvider services
         {
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
             }
-            CreateRoles(services).Wait();
+            //CreateRoles(services).Wait();
             //InitializeDatabase(app);
             app.UseStaticFiles();
 
@@ -125,22 +116,22 @@ namespace Auth
             });
         }
         // Role Configuration
-        private async Task CreateRoles(IServiceProvider serviceProvider)
-        {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        //private async Task CreateRoles(IServiceProvider serviceProvider)
+        //{
+        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            IdentityResult adminRoleResult;
-            bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
+        //    IdentityResult adminRoleResult;
+        //    bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
 
-            if (!adminRoleExists)
-            {
-                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
-            }
+        //    if (!adminRoleExists)
+        //    {
+        //        adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+        //    }
 
-            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
-            await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
-        }
+        //    ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
+        //    await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
+        //}
 
 
 

@@ -110,7 +110,7 @@ namespace Auth
                 app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
             }
-            CreateRoles(services).Wait();
+            //CreateRoles(services).Wait();
             //InitializeDatabase(app);
             app.UseStaticFiles();
 
@@ -125,22 +125,22 @@ namespace Auth
             });
         }
         // Role Configuration
-        private async Task CreateRoles(IServiceProvider serviceProvider)
-        {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        //private async Task CreateRoles(IServiceProvider serviceProvider)
+        //{
+        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            IdentityResult adminRoleResult;
-            bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
+        //    IdentityResult adminRoleResult;
+        //    bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
 
-            if (!adminRoleExists)
-            {
-                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
-            }
+        //    if (!adminRoleExists)
+        //    {
+        //        adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+        //    }
 
-            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
-            await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
-        }
+        //    ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
+        //    await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
+        //}
 
 
 

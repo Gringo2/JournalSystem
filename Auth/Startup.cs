@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
 using Auth.Data;
 using Auth.Models;
+using Auth.Services;
 using IdentityServer4;
 using IdentityServer4.Configuration;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
+using IdentityServer4.Services;
 using IdentityServerHost.Quickstart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Auth
 {
@@ -37,7 +38,7 @@ namespace Auth
         {
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
             string connectionString = Configuration.GetConnectionString("AuthConnection");
-
+            services.AddControllers();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -48,10 +49,9 @@ namespace Auth
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
-                
-
             // setting up stores for configuration and operational data
-                
+            services.AddTransient<IProfileService, ProfileService>();
+
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -65,23 +65,23 @@ namespace Auth
                     CookieSlidingExpiration = true
                 };
 
-                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
-                options.EmitStaticAudienceClaim = true;
-                }).AddConfigurationStore(options =>
-                {
-                options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
+                //// see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
+                //options.EmitStaticAudienceClaim = true;
+                //}).AddConfigurationStore(options =>
+                //{
+                //options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                //    sql => sql.MigrationsAssembly(migrationsAssembly));
+                //})
+                //.AddOperationalStore(options =>
+                //{
+                //    options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+                //        sql => sql.MigrationsAssembly(migrationsAssembly));
+                //    options.EnableTokenCleanup = true;
                 })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
-                        sql => sql.MigrationsAssembly(migrationsAssembly));
-                    options.EnableTokenCleanup = true;
-                })
-                //.AddInMemoryIdentityResources(Config.IdentityResources)
-                //.AddInMemoryApiResources(Config.ApiResources)
-                //.AddInMemoryApiScopes(Config.ApiScopes)
-                //.AddInMemoryClients(Config.Clients)
+                .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryApiResources(Config.ApiResources)
+                .AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>(); ;
 
 
@@ -103,13 +103,14 @@ namespace Auth
             
         }   
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IServiceProvider services)
         {
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
             }
+            //CreateRoles(services).Wait();
             //InitializeDatabase(app);
             app.UseStaticFiles();
 
@@ -120,11 +121,28 @@ namespace Auth
             {
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
+                
             });
         }
-        ///Configuration Options
+        //Role Configuration
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-       
-       
+            IdentityResult adminRoleResult;
+            bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
+
+            if (!adminRoleExists)
+            {
+                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
+            await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
+        }
+
+
+
     }
 }

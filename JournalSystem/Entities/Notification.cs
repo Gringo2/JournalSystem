@@ -8,7 +8,7 @@ namespace JournalSystem.Entities
     public class Notification
     {
         public Guid Id { get; set; }
-        public Guid Hop_Id { get; set; }
+        public Hop Hop { get; set; }
         public string Notification_Header { get; set; }
         public string Notification_Body { get; set; }
         public bool Is_Read { get; set; }

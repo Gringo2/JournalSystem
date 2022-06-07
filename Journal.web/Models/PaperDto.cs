@@ -1,5 +1,4 @@
-﻿using Journal.web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Journal.web.Models
@@ -21,6 +20,5 @@ namespace Journal.web.Models
         public Guid HopId { get; set; }
         public int Hop_count { get; set; }
         public DateTime Created { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace JournalSystem.Controllers
             _mapper = mapper;   
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll ()
         {
             IEnumerable<Category> categories = await _categoryRepo.GetAll();
@@ -40,7 +40,7 @@ namespace JournalSystem.Controllers
             return Ok(_mapper.Map<CategoryDto>(response));
         }
 
-        [HttpPost("SubmitCategory")]
+        [HttpPost("AddCategory")]
         public async Task<ActionResult<CategoryDto>> SubmitCategory(CategoryDto category)
         {
             var map = _mapper.Map<Category>(category);

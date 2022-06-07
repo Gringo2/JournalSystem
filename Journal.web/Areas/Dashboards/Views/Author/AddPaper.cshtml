@@ -1,0 +1,72 @@
+﻿@model PaperViewModel
+@{
+    ViewData["Title"] = "index";
+    Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
+}
+@{
+    var topicListItems = Model.Topics.Select(t =>
+        new SelectListItem { Value = t.TopicId.ToString(), Text = t.Topic_name }
+    ).ToList();
+    topicListItems.Insert(0, new SelectListItem { Text = "All" });
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JournalSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<form asp-area="Dashboards" asp-controller="Author" asp-action="AddPaper" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+    <h4>Enter your new Paper</h4>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div style="display:inline">
+        <div class="form-group">
+
+        <label asp-for="Paper.Title_name" class="col-md-2 control-label"></label>
+        <div class="col-md-6">
+            <input asp-for="Paper.Title_name" class="form-control" />
+            <span asp-validation-for="Paper.Title_name" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+
+        <label asp-for="Paper.Abstract" class="col-md-2 control-label"></label>
+        <div class="col-md-6">
+            <input asp-for="Paper.Abstract" class="form-control" />
+            <span asp-validation-for="Paper.Abstract" class="text-danger"></span>
+        </div>
+    </div>
+    
+     <div class="form-group">
+
+        <label asp-for="Paper.Description" class="col-md-2 control-label"></label>
+        <div class="col-md-6">
+            <input asp-for="Paper.Description" class="form-control" />
+            <span asp-validation-for="Paper.Description" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group col-md-5 mt-3">
+    <form asp-action="SelectCategory" method="post">
+        <select asp-for="SelectedTopic" asp-items="topicListItems"></select>
+        
+    </form>
+    </div>
+    </div>
+     <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload your File</p>
+            <input  type="file" name="files" />
+        </div>
+    </div>
+
+     <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" class="btn btn-primary" value="Add Paper" />
+        </div>
+    </div>
+</form>

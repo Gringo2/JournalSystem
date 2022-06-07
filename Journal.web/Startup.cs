@@ -1,4 +1,5 @@
 using Journal.web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -31,20 +32,18 @@ namespace Journal.web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<TokenInjectionService>();
 
-            services.AddHttpClient<IPaperRequestService, PaperRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/PaperStore"));
+            services.AddHttpClient<IPaperRequestService, PaperRequestService>();
 
             services.AddHttpClient<ICategoryRequestService, CategoryRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/Category"));
+                c.BaseAddress = new Uri("https://localhost:44225/api/Category"));
 
             services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/Institution"));
+                c.BaseAddress = new Uri("https://localhost:44225/api/Institution"));
 
-            services.AddHttpClient<ITopicRequestService, TopicRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/Topic"));
+            services.AddHttpClient<ITopicRequestService, TopicRequestService>();
 
             services.AddHttpClient<ICommentRequestService, CommentRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/Comment"));
+                c.BaseAddress = new Uri("https://localhost:44225/api/Comment"));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -59,8 +58,13 @@ namespace Journal.web
                options.ClientId = "interactive";
                options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                options.ResponseType = "code";
-
+               options.Scope.Add("roles");
+               
                options.SaveTokens = true;
+               options.GetClaimsFromUserInfoEndpoint = true;
+               options.ClaimActions.MapJsonKey("role", "role", "role");
+               options.TokenValidationParameters.NameClaimType = "name";
+               options.TokenValidationParameters.RoleClaimType = "role";
            });
         }
 

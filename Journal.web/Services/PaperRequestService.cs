@@ -22,7 +22,7 @@ namespace Journal.web.Services
         public async Task<IEnumerable<PaperDto>> Getall()
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.GetAsync("/PaperStore/GetAll");
+            var response = await _client.GetAsync("https://localhost:44225/api/PaperStore/GetAll");
             return await response.ReadContentAs<List<PaperDto>>();
         }
         public async Task<PaperDto> GetById(object id)

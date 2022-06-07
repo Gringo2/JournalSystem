@@ -1,7 +1,7 @@
 ﻿@model PaperViewModel
 @{
     ViewData["Title"] = "index";
-    Layout = "~/Areas/Dashboards/Views/Shared/_Dashboard_Layout.cshtml";
+    Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
 }
 @{
     var topicListItems = Model.Topics.Select(t =>
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
-<form asp-action="AddPaper" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+<form asp-area="Dashboards" asp-controller="Author" asp-action="AddPaper" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
     <h4>Enter your new Paper</h4>
 
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -50,10 +50,10 @@
             <span asp-validation-for="Paper.Description" class="text-danger"></span>
         </div>
     </div>
-    <div class="row mt-5 mb-3">
+    <div class="form-group col-md-5 mt-3">
     <form asp-action="SelectCategory" method="post">
         <select asp-for="SelectedTopic" asp-items="topicListItems"></select>
-        <button type="submit" class="filterButton">FILTER</button>
+        
     </form>
     </div>
     </div>

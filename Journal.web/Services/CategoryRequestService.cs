@@ -10,16 +10,16 @@ namespace Journal.web.Services
 {
     public class CategoryRequestService : ICategoryRequestService
     {
-        private readonly string _hostWebApiUrl;
+       
         private readonly HttpClient _client;
         private readonly TokenInjectionService _tokenInjectionService;
-        private readonly string _url;
+        
 
-        public CategoryRequestService(HttpClient client, TokenInjectionService tokenservice, string hostWebApiUri)
+        public CategoryRequestService(HttpClient client, TokenInjectionService tokenservice)
         {
             _client = client;
             _tokenInjectionService = tokenservice;
-            _hostWebApiUrl = hostWebApiUri;
+            
         }
         public async Task<IEnumerable<CategoryDto>> Getall()
         {

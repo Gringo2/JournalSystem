@@ -10,16 +10,16 @@ namespace Journal.web.Services
 {
     public class CommentRequestService : ICommentRequestService
     {
-        private readonly string _hostWebApiUrl;
+        
         private readonly HttpClient _client;
         private readonly TokenInjectionService _tokenInjectionService;
-        private readonly string _url;
+        
 
-        public CommentRequestService(HttpClient client, TokenInjectionService tokenservice, string hostWebApiUri)
+        public CommentRequestService(HttpClient client, TokenInjectionService tokenservice)
         {
             _client = client;
             _tokenInjectionService = tokenservice;
-            _hostWebApiUrl = hostWebApiUri;
+            
         }
         public async Task<IEnumerable<CommentsDto>> Getall()
         {

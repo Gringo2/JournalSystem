@@ -11,6 +11,6 @@ namespace JournalSystem.Models
         public string Institution_Email { get; set; }
         public string Institution_Phone { get; set; }
         public string Institution_website { get; set; }
-       //public IEnumerable<User> Users { get; set; }
+        //public IEnumerable<User> Users { get; set; }
     }
 }

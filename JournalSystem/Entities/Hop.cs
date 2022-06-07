@@ -6,15 +6,19 @@ namespace JournalSystem.Entities
     public class Hop
     {
         public Guid Id { get; set; }
-        public Guid Sender_Id { get; set; }
-        public Guid Reciever_Id { get; set; }
-        public Guid Paper_Id { get; set; }
-        // this is put here as a place holder and will be replaced by actions instead of edit decisions
-        // public int Edit_Decisions_Id { get; set; }
+        public Guid SenderId { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
+        public int StatusId { get; set; }
+        public Status Status { get; set; }
+        public int? EditDecisionsId { get; set; }
+        public EditDecisions EditDecisions { get; set; }
         public bool Notify { get; set; }
-        public DateTime Date_Created { get; set; }
-        public IEnumerable<Paper> Papers { get; set; }
-        public IEnumerable<Notification> Notifications { get; set; }
+        public DateTime Created { get; set; }
+        public Guid PaperId { get; set; }
+        public Paper Paper { get; set; }
+        public Guid NotificationId { get; set; }
+        public Notification Notifications { get; set; }
 
     }
 }

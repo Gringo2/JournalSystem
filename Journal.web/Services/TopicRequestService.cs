@@ -10,44 +10,44 @@ namespace Journal.web.Services
 {
     public class TopicRequestService: ITopicRequestService
     {
-        private readonly string _hostWebApiUrl;
+        
         private readonly HttpClient _client;
         private readonly TokenInjectionService _tokenInjectionService;
-        private readonly string _url;
+        
 
-        public TopicRequestService(HttpClient client, TokenInjectionService tokenservice, string hostWebApiUri)
+        public TopicRequestService(HttpClient client, TokenInjectionService tokenservice)
         {
             _client = client;
             _tokenInjectionService = tokenservice;
-            _hostWebApiUrl = hostWebApiUri;
+           
         }
         public async Task<IEnumerable<TopicDto>> Getall()
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.GetAsync("/GetAll");
+            var response = await _client.GetAsync("https://localhost:44225/api/Topic/GetAll");
             return await response.ReadContentAs<List<TopicDto>>();
         }
         public async Task<TopicDto> GetById(object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.GetAsync($"/GetTopicByID/{id}");
+            var response = await _client.GetAsync($"https://localhost:44225/api/Topic/GetTopicByID/{id}");
             return await response.ReadContentAs<TopicDto>();
         }
         //adds new paper
         public async Task Insert(TopicDto obj)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.PostAsJson("/AddTopic", obj);
+            await _client.PostAsJson("https://localhost:44225/api/Topic/AddTopic", obj);
         }
         public async Task Update(TopicDto obj, object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.PostAsJson($"/UpdateTopic/{id}", obj);
+            var response = await _client.PostAsJson($"https://localhost:44225/api/Topic/UpdateTopic/{id}", obj);
         }
         public async Task Delete(Guid id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.DeleteAsync($"/DeleteTopic/{id}");
+            await _client.DeleteAsync($"https://localhost:44225/api/Topic/DeleteTopic/{id}");
         }
     }
 }

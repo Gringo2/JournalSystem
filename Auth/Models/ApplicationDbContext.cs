@@ -11,6 +11,9 @@ namespace Auth.Data
         {
         }
 
+        public DbSet<Field> Fields { get; set; }
+        public DbSet<Institution> Institutions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

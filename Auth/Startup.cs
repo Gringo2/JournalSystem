@@ -110,7 +110,7 @@ namespace Auth
                 app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
             }
-            CreateRoles(services).Wait();
+            //CreateRoles(services).Wait();
             //InitializeDatabase(app);
             app.UseStaticFiles();
 

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,6 +48,7 @@ namespace Journal.web
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -54,15 +56,15 @@ namespace Journal.web
             }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
            {
+               options.SignInScheme = "Cookies";
                options.Authority = "https://localhost:5001";
                options.ClientId = "interactive";
                options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                options.ResponseType = "code";
                options.Scope.Add("roles");
-               
                options.SaveTokens = true;
                options.GetClaimsFromUserInfoEndpoint = true;
-               options.ClaimActions.MapJsonKey("role", "role", "role");
+               options.ClaimActions.MapUniqueJsonKey("role", "role", "role");
                options.TokenValidationParameters.NameClaimType = "name";
                options.TokenValidationParameters.RoleClaimType = "role";
            });

@@ -50,12 +50,15 @@ namespace JournalSystem.Controllers
             var response = await _paperRepo.GetById(paperId);
             return  Ok(_mapper.Map<PaperDto>(response));
         }
-        [HttpGet("GetPaperByTopic/{TopicId}")]
-        //public async Task<ActionResult<PaperDto>> GetPaperByTopic(Guid TopicId) {
 
-            
-        //    return Ok();
-        //}
+        [HttpGet("GetByTopic/{TopicId}")]
+        public async Task<ActionResult<PaperDto>> GetByTopic(Guid TopicId)
+        {
+            IEnumerable<Paper> papers = await _paperRepo.GetByTopic(TopicId);
+            var map = _mapper.Map<IEnumerable<PaperDto>>(papers);
+            return Ok(map);
+        }
+
         [HttpPost("SubmitPaper")]
         public async Task<ActionResult<PaperDto>> SubmitPaper(Paper paper)
         {

@@ -39,6 +39,14 @@ namespace JournalSystem.Controllers
             return Ok(_mapper.Map<TopicDto>(response));
         }
 
+        [HttpGet("GetByCategory/{CategoryId}")]
+        public async Task<ActionResult<TopicDto>> GetByCategory(Guid CategoryId)
+        {
+            IEnumerable<Topic> categories = await _topicRepo.GetByCategory(CategoryId);
+            var map = _mapper.Map<IEnumerable<TopicDto>>(categories);
+            return Ok(map);
+        }
+
         [HttpPost("AddTopic")]
         public async Task<ActionResult<TopicDto>> AddTopic(TopicDto topic)
         {

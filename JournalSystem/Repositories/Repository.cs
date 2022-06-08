@@ -28,6 +28,18 @@ namespace JournalSystem.Repositories
             return await table.FindAsync(id);
         }
 
+        public async Task<IEnumerable<T>> GetByCategory(Guid categoryId)
+        {
+            var x = await _context.Topics.Where(d => d.CategoryId == categoryId).ToListAsync();
+            return (IEnumerable<T>) x;
+        }
+
+        public async Task<IEnumerable<T>> GetByTopic(Guid topicId)
+        {
+            var x = await _context.Papers.Where(d => d.TopicId == topicId).ToListAsync();
+            return (IEnumerable<T>)x;
+        }
+
         public async Task Insert(T obj)
         {
             await table.AddAsync(obj);

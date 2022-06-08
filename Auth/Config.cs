@@ -14,8 +14,10 @@ namespace Auth
                    {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource("roles", new[] { "role" })
+                new IdentityResource("roles", new[] { "role" }),
+                new IdentityResource("phone", new [] {"phone"})
                    };
+               
         public static IEnumerable<ApiResource> ApiResources =>
             new ApiResource[]
             {
@@ -47,7 +49,7 @@ namespace Auth
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
 
-                    AllowedScopes = { "scope1", "roles" }
+                    AllowedScopes = { "scope1", "roles" , "phone" }
                 },
 
                 // interactive client using code flow + pkce
@@ -63,7 +65,7 @@ namespace Auth
                     PostLogoutRedirectUris = { "https://localhost:44227/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile","roles", "scope2" }
+                    AllowedScopes = { "openid", "profile","roles", "phone" ,"scope2" }
                 },
             };
 

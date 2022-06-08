@@ -47,6 +47,14 @@ namespace Auth.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(20)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Required]
+            [StringLength(20)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }

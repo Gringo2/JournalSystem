@@ -29,17 +29,25 @@ namespace Auth.Services
 
         public ProfileService() { }
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
-        {
+        {   
+            //gets the id of current user from context
             string sub = context.Subject.GetSubjectId();
+            
             ApplicationUser user = await _userManager.FindByIdAsync(sub);
             ClaimsPrincipal userClaims = await _userClaimsPrincipalFactory.CreateAsync(user);
-
+            var fname = new Claim("fitstname", user.FirstName);
+            var lname = new Claim("lastname", user.LastName);
+            var phone = new Claim("phone", user.PhoneNumber);
+            var result = _userManager.AddClaimAsync(user,phone);
             List<Claim> claims = userClaims.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+            
 
             if (_userManager.SupportsUserRole)
-            {
+            {   
+                // gets current user roles
                 IList<string> roles = await _userManager.GetRolesAsync(user);
+                // add each roles as claim
                 foreach (var roleName in roles)
                 {
                     claims.Add(new Claim(JwtClaimTypes.Role, roleName));

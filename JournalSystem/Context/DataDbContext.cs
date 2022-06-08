@@ -18,9 +18,9 @@ namespace JournalSystem.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comments> Comments { get; set; }
         public DbSet<EditDecisions> EditDecisions { get; set; }
-        public DbSet<Field> Field { get; set; }
+       // public DbSet<Field> Field { get; set; }
         public DbSet<Hop> Hops { get; set; }
-        public DbSet<Institution> Institutions { get; set; }
+        //public DbSet<Institution> Institutions { get; set; }
         //public DbSet<Issues> Issues { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Paper> Papers { get; set; }

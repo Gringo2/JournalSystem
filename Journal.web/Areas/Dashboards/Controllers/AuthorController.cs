@@ -38,10 +38,9 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
-            var role = _idtoken.Claims.Single(x => x.Type == "role");
+           
             var UserId = Guid.Parse(id.Value);
             return View();
-
 
         }
 
@@ -57,9 +56,16 @@ namespace Journal.web.Areas.Dashboards.Controllers
                 Topics = getTopics
             });
         }
+        [Route("profile")]
+        public  IActionResult Profile()
+        {
+            return View();
 
+        }
+
+        [Route("AddPapers")]
         [HttpPost]
-        public async Task<ActionResult> AddPaper(IFormFile files, PaperViewModel paperViewModel)
+        public async Task<ActionResult> AddPapers(IFormFile files, PaperViewModel paperViewModel)
         {
 
             PaperDto paper = paperViewModel.Paper;

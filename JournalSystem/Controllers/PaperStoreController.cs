@@ -60,10 +60,11 @@ namespace JournalSystem.Controllers
         }
 
         [HttpPost("SubmitPaper")]
-        public async Task<ActionResult<PaperDto>> SubmitPaper(Paper paper)
+        public async Task<ActionResult<PaperDto>> SubmitPaper(PaperDto paper)
         {
-            await _paperRepo.Insert(paper);
-            return CreatedAtAction(nameof(GetPaperByID), new { PaperId = paper.PaperId }, paper);
+            var map = _mapper.Map<Paper>(paper);
+            await _paperRepo.Insert(map);
+            return CreatedAtAction(nameof(GetPaperByID), new { PaperId = paper.PaperId }, map);
         }
 
 

@@ -19,7 +19,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
         }
         [Route("")]
         [Route("index")]
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             return View();
         }

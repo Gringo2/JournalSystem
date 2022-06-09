@@ -28,24 +28,24 @@ namespace Journal.web.Services
         public async Task<PaperDto> GetById(object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.GetAsync($"/GetPaperByID/{id}");
+            var response = await _client.GetAsync($"https://localhost:44225/api/GetPaperByID/{id}");
             return await response.ReadContentAs<PaperDto>();
         }
         //adds new paper
         public async Task Insert(PaperDto obj)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.PostAsJson("/SubmitPaper", obj);
+            await _client.PostAsJson("https://localhost:44225/api/SubmitPaper", obj);
         }
         public async Task Update(PaperDto obj, object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.PostAsJson($"/UpdatePaper/{id}", obj);
+            var response = await _client.PostAsJson($"https://localhost:44225/api/UpdatePaper/{id}", obj);
         }
         public async Task Delete(Guid id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.DeleteAsync($"/DeletePaper/{id}");
+            await _client.DeleteAsync($"https://localhost:44225/api/DeletePaper/{id}");
         }
 
     }

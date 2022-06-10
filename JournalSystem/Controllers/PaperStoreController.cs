@@ -23,16 +23,6 @@ namespace JournalSystem.Controllers
             _paperRepo = paperRepo;
             _mapper = mapper;
         }
-        //public IActionResult Index()
-        //{
-            
-        //    IEnumerable<Paper> papers =  _paperRepo.GetAll();
-        //    var map =  _mapper.Map<List<PaperDto>>(papers);
-        //    return View(new PaperViewModel
-        //    {
-        //        papers = map
-        //    });
-        //}
         
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<PaperDto>>> GetAll()

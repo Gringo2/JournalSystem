@@ -16,6 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Dashboards\Pages\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Areas\Dashboards\Pages\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Views\Home\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -39,11 +47,39 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Dashboards\Data\" />
-    <Folder Include="Areas\Dashboards\Models\" />
+    <Folder Include="Areas\Dashboards\Data\NewFolder\" />
+    <Folder Include="Areas\Dashboards\Models\NewFolder\" />
     <Folder Include="Areas\Dashboards\Views\Admin\" />
     <Folder Include="Models\Api\" />
     <Folder Include="wwwroot\Papers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Dashboards\Pages\Shared\_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Dashboards\Pages\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Dashboards\Pages\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Dashboards\Pages\Privacy.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Dashboards\Pages\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Dashboards\Pages\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Dashboards\Pages\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Dashboards\Pages\Error.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Dashboards\Pages\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Dashboards\Pages\Privacy.cshtml" />
   </ItemGroup>
 
 </Project>

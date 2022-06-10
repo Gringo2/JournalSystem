@@ -1,0 +1,71 @@
+﻿@page
+@model Journal.web.Areas.Dashboards.Pages.Data.UploadFileModel
+@{
+
+}
+@{
+    ViewData["Title"] = "index";
+    Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
+
+//    var topicListItems = Model.TopicDtos.Select(t =>
+//        new SelectListItem { Value = t.TopicId.ToString(), Text = t.TopicName }
+//    ).ToList();
+//    topicListItems.Insert(0, new SelectListItem { Text = "All" });
+//
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JournalSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+ 
+<form method="post" enctype="multipart/form-data" class="form-horizontal" >
+    <h4>Enter your new Paper</h4>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div style="display:inline">
+        <div class="form-group">
+
+        <label asp-for="Input.Title" class="col-md-2 control-label"></label>
+        <div class="col-md-6">
+            <input asp-for="Input.Title" class="form-control" />
+            <span asp-validation-for="Input.Title" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <label asp-for="Input.Abstract" class="col-md-2 control-label"></label>
+        <div class="col-md-6">
+            <input asp-for="Input.Abstract" class="form-control" />
+            <span asp-validation-for="Input.Abstract" class="text-danger"></span>
+        </div>
+    </div>
+    
+    
+    @*<div class="form-group col-md-5 mt-3">
+   
+        <select asp-for="Input.selectedTopic" asp-items="topicListItems"></select>
+        
+    
+    </div>*@
+    </div>
+     <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload your Paper</p>
+            <input  type="file" asp-for="Input.Upload" />
+        </div>
+    </div>
+
+    
+        <div class="col-md-offset-2 col-md-5">
+            @*<input  type="submit" class="btn btn-primary" value="AddPaper" />*@
+           <input type="submit" value="SubmitPaper" />
+           
+        </div>
+   
+</form>

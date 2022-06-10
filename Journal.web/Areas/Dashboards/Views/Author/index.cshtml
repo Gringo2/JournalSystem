@@ -1,4 +1,4 @@
-﻿
+﻿@model PaperViewModel
 @{
     ViewData["Title"] = "index";
     Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
@@ -486,4 +486,5 @@
       
     </div>
 
-
+    <div> <p>@Model.Paper.Title_name </p></div> 
+    

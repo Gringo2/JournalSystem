@@ -30,21 +30,22 @@ namespace Journal.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddRazorPages();
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddSingleton<TokenInjectionService>();
 
             services.AddHttpClient<IPaperRequestService, PaperRequestService>();
 
-            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/api/Category"));
+            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>();
 
-            services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/api/Institution"));
+            services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>();
 
             services.AddHttpClient<ITopicRequestService, TopicRequestService>();
 
-            services.AddHttpClient<ICommentRequestService, CommentRequestService>(c =>
-                c.BaseAddress = new Uri("https://localhost:44225/api/Comment"));
+            services.AddHttpClient<ICommentRequestService, CommentRequestService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -93,17 +94,20 @@ namespace Journal.web
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
+
             {
+                
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}").RequireAuthorization();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(
                 name: "Users",
                 areaName: "Dashboards",
-                pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}").RequireAuthorization();
+                pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}");
 
-                
+                endpoints.MapRazorPages();
+
             });
 
         }

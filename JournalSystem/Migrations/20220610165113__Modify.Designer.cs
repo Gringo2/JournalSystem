@@ -4,14 +4,16 @@ using JournalSystem.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace JournalSystem.Migrations.DataDb
+namespace JournalSystem.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    partial class DataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220610165113__Modify")]
+    partial class _Modify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,12 +116,6 @@ namespace JournalSystem.Migrations.DataDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Specialization")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Field");
@@ -146,16 +142,13 @@ namespace JournalSystem.Migrations.DataDb
                     b.Property<Guid>("PaperId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RecieverId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -180,24 +173,9 @@ namespace JournalSystem.Migrations.DataDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Institutiion_Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Institution_Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Institution_Phone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Institution_website")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("InstitutionId");
 
-                    b.ToTable("Institutions");
+                    b.ToTable("Institution");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Notification", b =>
@@ -400,9 +378,11 @@ namespace JournalSystem.Migrations.DataDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JournalSystem.Entities.User", null)
+                    b.HasOne("JournalSystem.Entities.User", "User")
                         .WithMany("Hops")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EditDecisions");
 
@@ -411,6 +391,8 @@ namespace JournalSystem.Migrations.DataDb
                     b.Navigation("Paper");
 
                     b.Navigation("Status");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Paper", b =>

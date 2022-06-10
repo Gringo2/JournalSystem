@@ -28,19 +28,25 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
         [Route("")]
         [Route("index")]
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index()  {
 
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var idtoken = await HttpContext.GetTokenAsync("id_token");
+            //var accessToken = await HttpContext.GetTokenAsync("access_token");
+            //var idtoken = await HttpContext.GetTokenAsync("id_token");
 
-            var _accesstoken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
-            var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
+            //var _accesstoken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
+            //var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
 
-            var claims = User.Claims.ToList();
-            var id = _idtoken.Claims.Single(x => x.Type == "sub");
-           
-            var UserId = Guid.Parse(id.Value);
-            return View();
+            //var claims = User.Claims.ToList();
+            //var id = _idtoken.Claims.Single(x => x.Type == "sub");
+
+            //var UserId = Guid.Parse(id.Value);
+            var Paper = await _paperRequestService.GetById("3fa85f64-5717-4562-b3fc-2c963f66afa6");
+            var Topics = await _topicRequstService.Getall();
+            return View( new PaperViewModel
+            {
+                Paper = Paper,
+                Topics = Topics
+            });
 
         }
 
@@ -63,9 +69,9 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
         }
 
-        [Route("AddPapers")]
-        [HttpPost]
-        public async Task<ActionResult> AddPapers(IFormFile files, PaperViewModel paperViewModel)
+
+        [HttpPost("AddPaper")]
+        public async Task<ActionResult> AddPaper([FromForm]IFormFile files, PaperViewModel paperViewModel)
         {
 
             PaperDto paper = paperViewModel.Paper;
@@ -87,9 +93,18 @@ namespace Journal.web.Areas.Dashboards.Controllers
             // Don't rely on or trust the FileName property without validation.           
             // properties must be checked
 
-            paper.File_path = files.FileName;
+            paper.FilePath = files.FileName;
             await _paperRequestService.Insert(paper);
             return RedirectToAction("Index");
         }
+        [Route("Notifications")]
+        public Task<IActionResult> GetNotifications()
+        {
+
+            return null;
+
+        }
+
+        
     }
 }

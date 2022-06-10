@@ -6,7 +6,7 @@ namespace Journal.web.Models
     public class TopicDto
     {
         public Guid TopicId { get; set; }
-        public string Topic_name { get; set; }
+        public string TopicName { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         //public IEnumerable<Paper> Papers { get; set; }

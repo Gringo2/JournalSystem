@@ -114,32 +114,58 @@
                   <p class="mb-0">Enter your email and password to register</p>
                 </div>
                 
-                  <form role="form">
-                     <div class="row">
+                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Create a new account.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
                 <div class="col-md-6 mb-4">
 
                   <div class="input-group input-group-outline mb-3">
-                    <label class="form-label" for="firstName">First Name</label>
-                    <input type="text" id="firstName" class="form-control" />
-                   
+                    <label class="form-label" asp-for="Input.FirstName">First Name</label>
+                    <input type="text" asp-for="Input.FirstName" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
                   </div>
-                  <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Fisrt Name</label>
-                      <input type="text" class="form-control">
-                    </div>
+                 
                 </div>
                 <div class="col-md-6 mb-4">
 
                   <div class="input-group input-group-outline mb-3">
-                     <label class="form-label" for="lastName">Last Name</label>
-                    <input type="text" id="lastName" class="form-control" />
-                    
+                     <label class="form-label" asp-for="Input.LastName">Last Name</label>
+                    <input type="text" asp-for="Input.LastName" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
                   </div>
 
                 </div>
               </div>
-
+              <div class = "row" >
+                  <div class="input-group input-group-outline mb-3">
+                    <input type="email" asp-for="Input.Email" class="form-control form-control-lg" />
+                    <label class="form-label" asp-for="Input.Email">Email</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                  </div>
+              <div class="input-group input-group-outline mb-3">
+                     <label class="form-label" asp-for="Input.PhoneNumber">Phone</label>
+                    <input type="text" asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    
+                  </div>
+              </div>
               <div class="row">
+                  <div class="input-group input-group-outline mb-3">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                 </div>
+            <div class="input-group input-group-outline mb-3">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+              </div>
+              </div>
+              
+
+             @* <div class="row">
                 <div class="col-md-6 mb-4 d-flex align-items-center">
 
                   <div class="input-group input-group-outline mb-3 datepicker w-100">
@@ -175,9 +201,9 @@
                   </div>
 
                 </div>
-              </div>
+              </div>*@
 
-              <div class="row">
+            @*  <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="input-group input-group-outline mb-3">
@@ -194,9 +220,9 @@
                   </div>
 
                 </div>
-              </div>
+              </div>*@
 
-              <div class="row">
+             @* <div class="row">
                 <div class="col-12">
 
                   <select class="select form-control-lg">
@@ -208,7 +234,7 @@
                   <label class="form-label select-label">Choose option</label>
 
                 </div>
-              </div>
+              </div>*@
                    @* <div class="row">
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Fisrt Name</label>
@@ -238,7 +264,7 @@
                       </label>
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign Up</button>
+                      <button type="submit" class="btn btn-primary">Register</button>
                     </div>
                   </form>
                 </div>

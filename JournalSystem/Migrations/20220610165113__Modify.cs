@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace JournalSystem.Migrations.DataDb
+namespace JournalSystem.Migrations
 {
-    public partial class _Initial : Migration
+    public partial class _Modify : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,9 +38,7 @@ namespace JournalSystem.Migrations.DataDb
                 name: "Field",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FieldName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,19 +46,14 @@ namespace JournalSystem.Migrations.DataDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Institutions",
+                name: "Institution",
                 columns: table => new
                 {
-                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Institution_Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Institution_Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Institution_website = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Institutions", x => x.InstitutionId);
+                    table.PrimaryKey("PK_Institution", x => x.InstitutionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +106,7 @@ namespace JournalSystem.Migrations.DataDb
                         principalColumn: "CategoryId",
                         onDelete: ReferentialAction.Cascade);
                 });
-            
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -133,13 +126,13 @@ namespace JournalSystem.Migrations.DataDb
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_Institutions_InstitutionId",
+                        name: "FK_Users_Institution_InstitutionId",
                         column: x => x.InstitutionId,
-                        principalTable: "Institutions",
+                        principalTable: "Institution",
                         principalColumn: "InstitutionId",
                         onDelete: ReferentialAction.Cascade);
                 });
-            //published should be nullable
+
             migrationBuilder.CreateTable(
                 name: "Papers",
                 columns: table => new
@@ -210,21 +203,20 @@ namespace JournalSystem.Migrations.DataDb
                         principalColumn: "PaperId",
                         onDelete: ReferentialAction.Cascade);
                 });
-            //correct
+
             migrationBuilder.CreateTable(
                 name: "Hops",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     EditDecisionsId = table.Column<int>(type: "int", nullable: true),
                     Notify = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,7 +233,7 @@ namespace JournalSystem.Migrations.DataDb
                         principalTable: "Notifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(                                      //-----------------  // on delete
+                    table.ForeignKey(
                         name: "FK_Hops_Papers_PaperId",
                         column: x => x.PaperId,
                         principalTable: "Papers",
@@ -258,7 +250,7 @@ namespace JournalSystem.Migrations.DataDb
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -384,7 +376,7 @@ namespace JournalSystem.Migrations.DataDb
                 name: "Field");
 
             migrationBuilder.DropTable(
-                name: "Institutions");
+                name: "Institution");
 
             migrationBuilder.DropTable(
                 name: "Categories");

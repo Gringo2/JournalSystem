@@ -3,10 +3,10 @@
     ViewData["Title"] = "index";
     Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
 
-    var topicListItems = Model.Topics.Select(t =>
-        new SelectListItem { Value = t.TopicId.ToString(), Text = t.TopicName }
-    ).ToList();
-    topicListItems.Insert(0, new SelectListItem { Text = "All" });
+    //var topicListItems = Model.Topics.Select(t =>
+    //    new SelectListItem { Value = t.TopicId.ToString(), Text = t.TopicName }
+    //).ToList();
+    //topicListItems.Insert(0, new SelectListItem { Text = "All" });
 }
 
 <head>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
- 
+ <body>
 <form id="form1" asp-action="AddPaper" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" >
     <h4>Enter your new Paper</h4>
 
@@ -40,13 +40,14 @@
             <span asp-validation-for="Paper.Abstract" class="text-danger"></span>
         </div>
     </div>
-
-    <div class="form-group col-md-5 mt-3">
-   
+    
+    
+    @*<div class="form-group col-md-5 mt-3">
+    <form asp-action="SelectCategory" method="post">
         <select asp-for="SelectedTopic" asp-items="topicListItems"></select>
         
-    
-    </div>
+    </form>
+    </div>*@
     </div>
      <div class="form-group">
         <div class="col-md-10">
@@ -58,8 +59,9 @@
     
         <div class="col-md-offset-2 col-md-5">
             @*<input  type="submit" class="btn btn-primary" value="AddPaper" />*@
-           @* <input type="submit" class="btn btn-primary" value="Add Product" />*@
-           <button type="submit" form="form1" class="" value="Submit">Submit</button>
+            <input type="submit" class="btn btn-primary" value="Add Product" />
+            @*<button type="submit" form="form1" class="btn btn-primary" value="Submit">Submit</button>*@
         </div>
    
 </form>
+</body>

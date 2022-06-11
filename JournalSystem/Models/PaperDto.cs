@@ -16,7 +16,7 @@ namespace JournalSystem.Models
         public int HopCount { get; set; }
         public DateTime Created { get; set; }
         public DateTime Published { get; set; }
-        public Guid TopicId { get; set; }
+        public string TopicId { get; set; }
         //public Topic Topic { get; set; }
         //public IEnumerable<Hop> Hops { get; set; }
         //public IEnumerable<User> Users { get; set; }

@@ -1,4 +1,5 @@
-﻿@model PaperViewModel
+﻿@using Journal.web.ViewModel
+@model PaperViewModel
 @{
     ViewData["Title"] = "index";
     Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
@@ -43,7 +44,7 @@
 
     <div class="form-group col-md-5 mt-3">
    
-        <select asp-for="SelectedTopic" asp-items="topicListItems"></select>
+        <select name="Select Topic" asp-for="SelectedTopic" asp-items="topicListItems"></select>
         
     
     </div>

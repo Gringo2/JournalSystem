@@ -1,5 +1,6 @@
 ﻿using Journal.web.Models;
 using Journal.web.Services;
+using Journal.web.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> GetPapers()
+        public async Task<IActionResult> GetAssignedPapers()
         {
             var papers = await _paperRequestService.Getall();
             return View(new PaperViewModel
@@ -41,6 +42,22 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
         }
 
+        public IActionResult SendComments()
+        {
+            return View();
+        }
+
+        public IActionResult GenerateHop()
+        {
+            return View();
+        }
+
+        public IActionResult EditDecisions()
+        {
+            return View();
+        }
+
+       
        
 
 

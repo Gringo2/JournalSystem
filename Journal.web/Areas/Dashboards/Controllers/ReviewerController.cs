@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Journal.web.Areas.Dashboards.Controllers
 {   
@@ -11,6 +12,27 @@ namespace Journal.web.Areas.Dashboards.Controllers
         [Route("")]
         [Route("index")]
         public IActionResult Index()
+        {
+            return View();
+        }
+        public Task<IActionResult> GetNotifications()
+        {
+
+            return null;
+
+        }
+
+        public IActionResult SendComments()
+        {
+            return View();
+        }
+
+        public IActionResult GenerateHop()
+        {
+            return View();
+        }
+
+        public IActionResult EditDecisions()
         {
             return View();
         }

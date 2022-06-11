@@ -1,5 +1,6 @@
 ﻿using Journal.web.Models;
 using Journal.web.Services;
+using Journal.web.ViewModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

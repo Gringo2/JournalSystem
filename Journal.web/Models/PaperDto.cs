@@ -16,6 +16,6 @@ namespace Journal.web.Models
         public int HopCount { get; set; }
         public DateTime Created { get; set; }
         public DateTime Published { get; set; }
-        public Guid TopicId { get; set; }
+        public string TopicId { get; set; }
     }
 }

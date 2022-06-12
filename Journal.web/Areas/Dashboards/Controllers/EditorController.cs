@@ -71,8 +71,19 @@ namespace Journal.web.Areas.Dashboards.Controllers
             return View();
         }
         [Route("GenerateHop")]
-        public IActionResult GenerateHop()
+        public async Task<IActionResult> GenerateHop()
         {
+            var Paper = _paperRequestService.GetById("");
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var idtoken = await HttpContext.GetTokenAsync("id_token");
+
+            var _accesstoken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
+            var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
+
+            var claims = User.Claims.ToList();
+            var id = _idtoken.Claims.Single(x => x.Type == "sub");
+            var UserId = Guid.Parse(id.Value);
+
             return View();
         }
         [Route("EditDecisions")]

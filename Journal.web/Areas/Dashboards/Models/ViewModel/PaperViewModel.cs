@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Journal.web.ViewModel
+namespace Journal.web.Areas.Dashboards.Models.ViewModel
 {
     public class PaperViewModel
     {
@@ -10,5 +10,6 @@ namespace Journal.web.ViewModel
         public Guid SelectedTopic { get; set; }
         public IEnumerable<PaperDto> Papers { get; set; }
         public IEnumerable<TopicDto> Topics { get; set; }
+        public PaperTable TableModel { get; set; }
     }
 }

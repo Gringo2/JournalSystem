@@ -49,7 +49,6 @@
   <ItemGroup>
     <Folder Include="Areas\Dashboards\Data\NewFolder\" />
     <Folder Include="Areas\Dashboards\Models\NewFolder\" />
-    <Folder Include="Areas\Dashboards\Views\Admin\" />
     <Folder Include="Models\Api\" />
     <Folder Include="wwwroot\Papers\" />
   </ItemGroup>

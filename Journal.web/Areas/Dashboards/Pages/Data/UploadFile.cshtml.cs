@@ -1,3 +1,4 @@
+using Journal.web.Areas.Dashboards.Models.ViewModel;
 using Journal.web.Models;
 using Journal.web.Services;
 using Journal.web.ViewModel;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Journal.web.Areas.Dashboards.Pages.Data
 {
@@ -56,7 +58,8 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
 
         }
         public async void OnGetAsync()
-        {
+        {   
+           
             TopicDtos = await _topicRequestService.Getall();
             Options = TopicDtos.Select(a =>
                                   new SelectListItem
@@ -67,10 +70,10 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
             Options.Insert(0, new SelectListItem { Value = "Select", Text = "Select Topics" });
         }
 
-        public async void OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)
         {
 
-
+            ReturnUrl ??= Url.Content("/Dashboards/Author");
             var Paper = new PaperDto
             {
                 PaperId = Guid.NewGuid(),
@@ -103,7 +106,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
 
             }
             await _paperRequestService.Insert(Paper);
-
+            return LocalRedirect(ReturnUrl);
 
         }
         

@@ -31,7 +31,7 @@ namespace JournalSystem.Controllers
             var map = _mapper.Map<List<PaperDto>>(papers);
             return Ok(map);
         }
-
+        
         [HttpGet("GetPaperByID/{paperId}")]
 
         public async Task<ActionResult<PaperDto>> GetPaperByID(Guid paperId)

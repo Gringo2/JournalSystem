@@ -1,4 +1,5 @@
 ﻿using Journal.web.Areas.Dashboards.Models.ViewModel;
+using Journal.web.Models;
 using Journal.web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -42,7 +43,11 @@ namespace Journal.web.Areas.Dashboards.Controllers
         [Route("index")]
         public async Task<IActionResult> Index() {
             var Papers = await _paperRequestService.Getall();
+
+            List<string> topic = new List<string>();
+
             
+          
             return View( new PaperViewModel
             {
                 Papers = Papers
@@ -74,7 +79,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
             var UserId = Guid.Parse(id.Value);
-
+            
             return View();
         }
         [Route("Logout")]

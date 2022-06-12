@@ -27,7 +27,16 @@ namespace JournalSystem.Repositories
         {
             return await table.FindAsync(id);
         }
+        public async Task<T> GetPaperUser(Guid PaperId)
+        {
+            var paper = _context.Papers
+                .Include(p => p.Users)
+                .ThenInclude(u => u.RoleId).ToList()
 
+            var user = _context.Users
+                .Include(u => u.Papers)
+                .ThenInclude(t => t.PaperId).ToList();
+        }
         public async Task<IEnumerable<T>> GetByCategory(Guid categoryId)
         {
             var x = await _context.Topics.Where(d => d.CategoryId == categoryId).ToListAsync();

@@ -35,7 +35,7 @@ namespace Journal.web
 
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddSingleton<TokenInjectionService>();
+            services.AddTransient<TokenInjectionService>();
 
             services.AddHttpClient<IPaperRequestService, PaperRequestService>();
 

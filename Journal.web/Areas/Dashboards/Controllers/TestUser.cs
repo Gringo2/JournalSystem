@@ -6,7 +6,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
     [Authorize]
     [Area("Dashboards")]
     [Route("Dashboards/dashboard")]
-    public class DashboardController : Controller
+    public class TestUser : Controller
     {
         [Route("")]
         [Route("index")]

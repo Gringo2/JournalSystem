@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JournalSystem.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class 
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(object id);
@@ -14,6 +14,8 @@ namespace JournalSystem.Repositories
         Task<IEnumerable<T>> GetByTopic(Guid topicId);
         Task<IEnumerable<T>> GetPaperUser(Guid paperId);
         Task<IEnumerable<T>> GetUserPaper(Guid userId);
+        void AddUserPaper(Paper obj, User ob);
+        void AddPaperUser(User obj, Paper ob);
         //Task<IEnumerable<T>> SortPapers(int n);
         Task Insert(T obj);
         Task Update(T obj);

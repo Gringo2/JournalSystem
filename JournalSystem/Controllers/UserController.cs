@@ -67,14 +67,5 @@ namespace JournalSystem.Controllers
             }
             return map;
         }
-
-        [HttpPost("AddPaperUser")]
-        public void AddPaperUser(UserDto obj, PaperDto ob)
-        {
-            var map = _mapper.Map<User>(obj);
-            var map2 = _mapper.Map<Paper>(ob);
-            _userRepo.AddPaperUser(map, map2);
-            CreatedAtAction(nameof(GetUserByID), new { UserId = obj.UserId }, obj);
-        }
     }
 }

@@ -14,8 +14,6 @@ namespace JournalSystem.Repositories
         Task<IEnumerable<T>> GetByTopic(Guid topicId);
         Task<IEnumerable<T>> GetPaperUser(Guid paperId);
         Task<IEnumerable<T>> GetUserPaper(Guid userId);
-        void AddUserPaper(Paper obj, User ob);
-        void AddPaperUser(User obj, Paper ob);
         //Task<IEnumerable<T>> SortPapers(int n);
         Task Insert(T obj);
         Task Update(T obj);

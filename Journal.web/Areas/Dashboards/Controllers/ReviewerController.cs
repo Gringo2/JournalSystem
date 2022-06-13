@@ -43,15 +43,10 @@ namespace Journal.web.Areas.Dashboards.Controllers
                 Papers = Papers
             });
         }
+        
         // sends Comment to user
-        [Route("Papers")]
-        public IActionResult Papers()
-        {
-            
-            return View();
-
-        }
         //can also be action only
+
         [Route("Comments")]
         public IActionResult Comments()
         {
@@ -88,6 +83,12 @@ namespace Journal.web.Areas.Dashboards.Controllers
         [Route("Notifications")]
         public IActionResult Notifications()
         {
+            var notify = new NotificationDto
+            {
+
+            };
+
+            _notificationRequestService.Insert(notify);
 
             return View();
 
@@ -104,7 +105,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
             var UserId = Guid.Parse(id.Value);
-           
+            
             return View();
         }
 

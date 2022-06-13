@@ -48,14 +48,14 @@ namespace JournalSystem
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "JournalAPI", Version = "v1" });
             });
 
-            
+
             //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //    .AddJwtBearer(options =>
             //    {
-            //       //validate the incoming token to make sure it is coming from a trusted issuer
-            //       options.Authority = "https://localhost:5001";
-            //       //validate that the token is valid to be used with this api (aka audience)
-            //       options.Audience = "scope1";
+            //        //validate the incoming token to make sure it is coming from a trusted issuer
+            //        options.Authority = "https://localhost:5001";
+            //        //validate that the token is valid to be used with this api (aka audience)
+            //        options.Audience = "scope1";
 
             //    });
 

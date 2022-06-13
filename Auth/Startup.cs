@@ -110,7 +110,7 @@ namespace Auth
                 app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
             }
-            //CreateRoles(services).Wait();
+            CreateRoles(services).Wait();
             //InitializeDatabase(app);
             app.UseStaticFiles();
 
@@ -131,15 +131,15 @@ namespace Auth
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             IdentityResult adminRoleResult;
-            bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
+            bool adminRoleExists = await RoleManager.RoleExistsAsync("Author");
 
             if (!adminRoleExists)
             {
-                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Author"));
             }
 
-            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JOBS.BEZU@GMAIL.COM");
-            await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
+            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("ELIHUGECH@GMAIL.COM");
+            await UserManager.AddToRoleAsync(userToMakeAdmin, "Author");
         }
 
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JournalSystem.Migrations
 {
-    public partial class Initial : Migration
+    public partial class _fix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -419,9 +419,7 @@ namespace JournalSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_RoleId",
                 table: "Authors",
-                column: "RoleId",
-                unique: true,
-                filter: "[RoleId] IS NOT NULL");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PaperId",
@@ -441,9 +439,7 @@ namespace JournalSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Editors_RoleId",
                 table: "Editors",
-                column: "RoleId",
-                unique: true,
-                filter: "[RoleId] IS NOT NULL");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hops_AuthorId",
@@ -515,9 +511,7 @@ namespace JournalSystem.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Reviewers_RoleId",
                 table: "Reviewers",
-                column: "RoleId",
-                unique: true,
-                filter: "[RoleId] IS NOT NULL");
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_CategoryId",

@@ -50,10 +50,9 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
             [StringLength(100)]
             [Display(Name = "Abstract")]
             public string Abstract { get; set; }
-            [Required]
-            [StringLength(100)]
-            [Display(Name = "Select Topic")]
-            public string SelectedTopic { get; set; }
+         
+            [Display(Name = "SelectTopic")]
+            public TopicDto SelectedTopic { get; set; }
             [Required]
             public IFormFile Upload { get; set; }
 
@@ -71,7 +70,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
                                       Value = a.TopicId.ToString(),
                                       Text =  a.TopicName
                                   }).ToList();
-            Options.Insert(0, new SelectListItem { Value = "", Text = "SelectTopics" });
+            Options.Insert(0, new SelectListItem { Value = "", Text = "Topics" });
         }
 
         public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)
@@ -93,7 +92,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
 
             await _hopRequestService.Insert(Hop);
             
-            Guid topicId = Guid.Parse(Input.SelectedTopic);
+            Guid topicId = Input.SelectedTopic.TopicId;
             ReturnUrl ??= Url.Content("/Dashboards/Author");
             var Paper = new PaperDto
             {

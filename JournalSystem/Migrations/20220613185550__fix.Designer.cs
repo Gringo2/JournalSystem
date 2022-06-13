@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JournalSystem.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220613135319_Initial")]
-    partial class Initial
+    [Migration("20220613185550__fix")]
+    partial class _fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,9 +69,7 @@ namespace JournalSystem.Migrations
 
                     b.HasIndex("InstitutionId");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique()
-                        .HasFilter("[RoleId] IS NOT NULL");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Authors");
                 });
@@ -166,9 +164,7 @@ namespace JournalSystem.Migrations
 
                     b.HasIndex("InstitutionId");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique()
-                        .HasFilter("[RoleId] IS NOT NULL");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Editors");
                 });
@@ -413,9 +409,7 @@ namespace JournalSystem.Migrations
 
                     b.HasIndex("InstitutionId");
 
-                    b.HasIndex("RoleId")
-                        .IsUnique()
-                        .HasFilter("[RoleId] IS NOT NULL");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Reviewers");
                 });
@@ -501,8 +495,8 @@ namespace JournalSystem.Migrations
                         .HasForeignKey("InstitutionId");
 
                     b.HasOne("JournalSystem.Entities.Role", "Role")
-                        .WithOne("Author")
-                        .HasForeignKey("JournalSystem.Entities.Author", "RoleId");
+                        .WithMany("Authors")
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Field");
 
@@ -531,8 +525,8 @@ namespace JournalSystem.Migrations
                         .HasForeignKey("InstitutionId");
 
                     b.HasOne("JournalSystem.Entities.Role", "Role")
-                        .WithOne("Editor")
-                        .HasForeignKey("JournalSystem.Entities.Editor", "RoleId");
+                        .WithMany("Editors")
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Field");
 
@@ -618,8 +612,8 @@ namespace JournalSystem.Migrations
                         .HasForeignKey("InstitutionId");
 
                     b.HasOne("JournalSystem.Entities.Role", "Role")
-                        .WithOne("Reviewer")
-                        .HasForeignKey("JournalSystem.Entities.Reviewer", "RoleId");
+                        .WithMany("Reviewers")
+                        .HasForeignKey("RoleId");
 
                     b.Navigation("Field");
 
@@ -702,11 +696,11 @@ namespace JournalSystem.Migrations
 
             modelBuilder.Entity("JournalSystem.Entities.Role", b =>
                 {
-                    b.Navigation("Author");
+                    b.Navigation("Authors");
 
-                    b.Navigation("Editor");
+                    b.Navigation("Editors");
 
-                    b.Navigation("Reviewer");
+                    b.Navigation("Reviewers");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Status", b =>

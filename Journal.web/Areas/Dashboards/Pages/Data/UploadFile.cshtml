@@ -1,18 +1,11 @@
 ﻿@page
 @model Journal.web.Areas.Dashboards.Pages.Data.UploadFileModel
 @{
-
-}
-@{
     ViewData["Title"] = "index";
     Layout = "~/Areas/Dashboards/Views/Shared/_Author_Layout.cshtml";
-
-    //var topicListItems = @Model.TopicDtos.Select(t =>
-    //    new SelectListItem { Value = t.TopicId.ToString(), Text = t.TopicName }
-    //).ToList();
-    //topicListItems.Insert(0, new SelectListItem { Text = "All" });
-//
 }
+
+   
 
 <head>
     <meta charset="utf-8" />
@@ -49,7 +42,7 @@
     
     <div class="form-group col-md-5 mt-3">
          
-        <select asp-for="Input.SelectedTopic" asp-items="@Model.Options"></select>
+        <select asp-for="Input.SelectedTopic" asp-items="Model.Options"></select>
         
     
     </div>
@@ -63,7 +56,7 @@
 
     
         <div class="col-md-offset-2 col-md-5">
-            @*<input  type="submit" class="btn btn-primary" value="AddPaper" />*@
+           
            <input type="submit" value="SubmitPaper" />
            
         </div>

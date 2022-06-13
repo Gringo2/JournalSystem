@@ -29,24 +29,24 @@ namespace Journal.web.Services
         public async Task<AuthorDto> GetById(object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.GetAsync($"https://localhost:44225/api/Author/GetPaperByID/{id}");
+            var response = await _client.GetAsync($"https://localhost:44225/api/Author/GetAuthorByID/{id}");
             return await response.ReadContentAs<AuthorDto>();
         }
         //adds new paper
         public async Task Insert(AuthorDto obj)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.PostAsJson("https://localhost:44225/api/Author/SubmitPaper", obj);
+            await _client.PostAsJson("https://localhost:44225/api/Author/SubmitAuthor", obj);
         }
         public async Task Update(AuthorDto obj, object id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            var response = await _client.PostAsJson($"https://localhost:44225/api/Author/UpdatePaper/{id}", obj);
+            var response = await _client.PostAsJson($"https://localhost:44225/api/Author/UpdateAuthor/{id}", obj);
         }
         public async Task Delete(Guid id)
         {
             _client.SetBearerToken(_tokenInjectionService.GetToken().ToString());
-            await _client.DeleteAsync($"https://localhost:44225/api/Author/DeletePaper/{id}");
+            await _client.DeleteAsync($"https://localhost:44225/api/Author/DeleteAuthor/{id}");
         }
     }
 }

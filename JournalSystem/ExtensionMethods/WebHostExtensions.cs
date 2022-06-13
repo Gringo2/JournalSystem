@@ -21,7 +21,7 @@ namespace JournalSystem.ExtensionMethods
                 var context = services.GetService<DataDbContext>();
 
                 // now we have the DbContext. Run migrations
-                context.Database.Migrate();
+                //context.Database.Migrate();
 
                 // now that the database is up to date. Let's seed
                 new RoleSeeder(context).SeedData();

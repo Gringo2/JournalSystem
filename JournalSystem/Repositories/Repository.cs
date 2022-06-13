@@ -63,6 +63,26 @@ namespace JournalSystem.Repositories
             return (IEnumerable<T>)x;
         }
 
+        public void AddPaperUser(User obj, Paper ob)
+        {
+             _context.AddRange(new User
+            {
+                UserId = obj.UserId,
+                Papers = new List<Paper> { ob }
+            });
+            _context.SaveChangesAsync();
+        }
+
+        public void AddUserPaper(Paper obj, User ob)
+        {
+            _context.AddRange(new Paper
+            {
+                PaperId = obj.PaperId,
+                Users = new List<User> { ob }
+            });
+            _context.SaveChangesAsync();
+        }
+
         public async Task Insert(T obj)
         {
             await table.AddAsync(obj);

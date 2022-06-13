@@ -27,24 +27,24 @@ namespace JournalSystem.Repositories
         {
             return await table.FindAsync(id);
         }
-        public async Task<IEnumerable<T>> GetPaperUser(Guid paperId)
-        {
-            var paper = await _context.Papers
-                .Where(p => p.PaperId == paperId)
-                .Include(p => p.Users)
-                .ThenInclude(p => p.RoleId).ToListAsync();
+        //public async Task<IEnumerable<T>> GetPaperAuthor(Guid paperId)
+        //{
+        //    var paper = await _context.Papers
+        //        .Where(p => p.PaperId == paperId)
+        //        .Include(p => p.AuthorId)
+        //        .ThenInclude(p => p.).ToListAsync();
 
-            return (IEnumerable<T>)paper;
-        }
-        public async Task<IEnumerable<T>> GetUserPaper(Guid userId)
-        {
-            var user = await _context.Users
-                .Where(u => u.UserId == userId)
-                .Include(u => u.Papers)
-                .ThenInclude(u => u.PaperId).ToListAsync();
+        //    return (IEnumerable<T>)paper;
+        //}
+        //public async Task<IEnumerable<T>> GetAuthorPaper(Guid userId)
+        //{
+        //    var user = await _context.Authors
+        //        .Where(u => u.AuthorId == userId)
+        //        .Include(u => u.Papers)
+        //        .ThenInclude(u => u.PaperId).ToListAsync();
 
-            return (IEnumerable<T>)user;
-        }
+        //    return (IEnumerable<T>)user;
+        //}
 
         //public async Task<IEnumerable<T>> setpaperuser(guid userid)
         //{

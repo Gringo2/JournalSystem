@@ -7,8 +7,8 @@ namespace JournalSystem.Entities
     {
         public Guid Id { get; set; }
         public Guid SenderId { get; set; }
-        public Guid UserId { get; set; }
-        public User User { get; set; }
+        //public Guid UserId { get; set; }
+        //public User User { get; set; }
         public int? StatusId { get; set; }
         public Status Status { get; set; }
         public int? EditDecisionsId { get; set; }

@@ -1,14 +1,14 @@
-﻿using AutoMapper;
-using JournalSystem.Entities;
-using JournalSystem.Models;
+﻿//using AutoMapper;
+//using JournalSystem.Entities;
+//using JournalSystem.Models;
 
-namespace JournalSystem.Profiles
-{
-    public class UserProfile : Profile
-    {
-        public UserProfile()
-        {
-            CreateMap<User, UserDto>().ReverseMap();
-        }
-    }
-}
+//namespace JournalSystem.Profiles
+//{
+//    public class UserProfile : Profile
+//    {
+//        public UserProfile()
+//        {
+//            CreateMap<User, UserDto>().ReverseMap();
+//        }
+//    }
+//}

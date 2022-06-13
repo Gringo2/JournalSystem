@@ -71,7 +71,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
             return View();
         }
         [Route("GenerateHop")]
-        public async Task<IActionResult> GenerateHop()
+        public async Task<IActionResult> GenerateHop(Guid PaperId)
         {
             var Paper = _paperRequestService.GetById("");
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -84,6 +84,15 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
             var UserId = Guid.Parse(id.Value);
 
+            //required attributes to generate hop SenderId, User ID PaperId
+            //
+            
+
+
+
+            
+
+            //var hop = _hopRequestService.Insert();
             return View();
         }
         [Route("EditDecisions")]

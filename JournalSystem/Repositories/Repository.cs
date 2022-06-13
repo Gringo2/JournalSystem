@@ -45,6 +45,12 @@ namespace JournalSystem.Repositories
 
             return (IEnumerable<T>)user;
         }
+
+        //public async Task<IEnumerable<T>> setpaperuser(guid userid)
+        //{
+            
+        //}
+
         public async Task<IEnumerable<T>> GetByCategory(Guid categoryId)
         {
             var x = await _context.Topics.Where(d => d.CategoryId == categoryId).ToListAsync();

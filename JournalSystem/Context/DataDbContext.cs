@@ -27,7 +27,7 @@ namespace JournalSystem.Context
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
-       
+        public DbSet<Role> Roles { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

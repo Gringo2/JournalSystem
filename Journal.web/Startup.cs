@@ -51,6 +51,10 @@ namespace Journal.web
 
             services.AddHttpClient<INotificationRequestService, NotificationRequestService>();
 
+            services.AddHttpClient<IEditDecisionService, EditDecisionService>();
+
+            services.AddHttpClient<IArticleTemplateService, ArticleTemplateService>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

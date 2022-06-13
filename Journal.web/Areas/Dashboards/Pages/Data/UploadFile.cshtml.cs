@@ -67,7 +67,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
                                       Value = a.TopicId.ToString(),
                                       Text =  a.TopicName
                                   }).ToList();
-            Options.Insert(0, new SelectListItem { Value = "Select", Text = "Select Topics" });
+            //Options.Insert(0, new SelectListItem { Value = "", Text = "SelectTopics" });
         }
 
         public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)

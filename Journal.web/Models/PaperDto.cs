@@ -14,8 +14,11 @@ namespace Journal.web.Models
         public int Version { get; set; }
         public int No_Pages { get; set; }
         public int HopCount { get; set; }
+        public Guid AuthorId { get; set; }
+        public Guid EditorId { get; set; }
+        public Guid ReviewerId { get; set; }
         public DateTime Created { get; set; }
         public DateTime Published { get; set; }
-        public string TopicId { get; set; }
+        public Guid TopicId { get; set; }
     }
 }

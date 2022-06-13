@@ -72,7 +72,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
 
         public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)
         {
-
+            Guid topicId = Guid.Parse(Input.SelectedTopic);
             ReturnUrl ??= Url.Content("/Dashboards/Author");
             var Paper = new PaperDto
             {
@@ -80,7 +80,7 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
                 Title_name = Input.Title,
                 Abstract = Input.Abstract,
                 FilePath = Input.Upload.FileName,
-                TopicId = Input.SelectedTopic,
+                TopicId = topicId,
                 Version = 1,
                 No_Pages = 1,
                 HopCount = 1,

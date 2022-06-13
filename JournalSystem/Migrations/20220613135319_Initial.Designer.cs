@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JournalSystem.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220613123445_Initial")]
+    [Migration("20220613135319_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,13 +27,13 @@ namespace JournalSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PaperId")
+                    b.Property<Guid?>("PaperId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Version")
@@ -42,7 +42,8 @@ namespace JournalSystem.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PaperId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PaperId] IS NOT NULL");
 
                     b.ToTable("ArticleTemplates");
                 });
@@ -107,13 +108,19 @@ namespace JournalSystem.Migrations
                     b.Property<string>("Comment_Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PaperId")
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("PaperId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("RecieverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -175,6 +182,9 @@ namespace JournalSystem.Migrations
                     b.Property<string>("FieldName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Specialization")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Fields");
@@ -189,7 +199,7 @@ namespace JournalSystem.Migrations
                     b.Property<Guid?>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("EditDecisionsId")
@@ -204,13 +214,16 @@ namespace JournalSystem.Migrations
                     b.Property<bool>("Notify")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("PaperId")
+                    b.Property<Guid?>("PaperId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("RecieverId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ReviewerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SenderId")
+                    b.Property<Guid?>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("StatusId")
@@ -246,6 +259,18 @@ namespace JournalSystem.Migrations
                     b.Property<string>("Institutiion_Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Institution_Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Institution_Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Institution_website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("InstitutionId");
 
                     b.ToTable("Institutions");
@@ -263,7 +288,7 @@ namespace JournalSystem.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Issue_No")
+                    b.Property<int?>("Issue_No")
                         .HasColumnType("int");
 
                     b.Property<string>("JournalName")
@@ -272,10 +297,10 @@ namespace JournalSystem.Migrations
                     b.Property<string>("Publisher")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Volume")
+                    b.Property<int?>("Volume")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("YearPublished")
+                    b.Property<DateTime?>("YearPublished")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -289,7 +314,7 @@ namespace JournalSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Date_Created")
+                    b.Property<DateTime?>("Date_Created")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Is_Read")
@@ -318,7 +343,7 @@ namespace JournalSystem.Migrations
                     b.Property<Guid?>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("EditorId")
@@ -327,31 +352,31 @@ namespace JournalSystem.Migrations
                     b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HopCount")
+                    b.Property<int?>("HopCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("No_Pages")
+                    b.Property<int?>("No_Pages")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Published")
+                    b.Property<DateTime?>("Published")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("ReviewerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title_name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TopicId")
+                    b.Property<Guid?>("TopicId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Version")
+                    b.Property<int?>("Version")
                         .HasColumnType("int");
 
                     b.HasKey("PaperId");
@@ -437,7 +462,7 @@ namespace JournalSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -460,9 +485,7 @@ namespace JournalSystem.Migrations
                 {
                     b.HasOne("JournalSystem.Entities.Paper", "Paper")
                         .WithOne("ArticleTemplate")
-                        .HasForeignKey("JournalSystem.Entities.ArticleTemplate", "PaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JournalSystem.Entities.ArticleTemplate", "PaperId");
 
                     b.Navigation("Paper");
                 });
@@ -492,9 +515,7 @@ namespace JournalSystem.Migrations
                 {
                     b.HasOne("JournalSystem.Entities.Paper", "Paper")
                         .WithMany("Comments")
-                        .HasForeignKey("PaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaperId");
 
                     b.Navigation("Paper");
                 });
@@ -540,9 +561,7 @@ namespace JournalSystem.Migrations
 
                     b.HasOne("JournalSystem.Entities.Paper", "Paper")
                         .WithMany("Hops")
-                        .HasForeignKey("PaperId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaperId");
 
                     b.HasOne("JournalSystem.Entities.Reviewer", null)
                         .WithMany("Hops")
@@ -577,9 +596,7 @@ namespace JournalSystem.Migrations
 
                     b.HasOne("JournalSystem.Entities.Topic", "Topic")
                         .WithMany("Papers")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TopicId");
 
                     b.Navigation("Author");
 
@@ -615,9 +632,7 @@ namespace JournalSystem.Migrations
                 {
                     b.HasOne("JournalSystem.Entities.Category", "Category")
                         .WithMany("Topics")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });

@@ -39,7 +39,8 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FieldName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FieldName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +52,11 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_website = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,12 +69,12 @@ namespace JournalSystem.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JournalName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Volume = table.Column<int>(type: "int", nullable: false),
-                    Issue_No = table.Column<int>(type: "int", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: true),
+                    Issue_No = table.Column<int>(type: "int", nullable: true),
                     Publisher = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    YearPublished = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    YearPublished = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,7 +89,7 @@ namespace JournalSystem.Migrations
                     Notification_Header = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notification_Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Is_Read = table.Column<bool>(type: "bit", nullable: false),
-                    Date_Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date_Created = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,7 +132,7 @@ namespace JournalSystem.Migrations
                     TopicName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +142,7 @@ namespace JournalSystem.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,18 +248,18 @@ namespace JournalSystem.Migrations
                     PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Abstract = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Version = table.Column<int>(type: "int", nullable: false),
-                    No_Pages = table.Column<int>(type: "int", nullable: false),
-                    HopCount = table.Column<int>(type: "int", nullable: false),
+                    Version = table.Column<int>(type: "int", nullable: true),
+                    No_Pages = table.Column<int>(type: "int", nullable: true),
+                    HopCount = table.Column<int>(type: "int", nullable: true),
                     AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EditorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ReviewerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Published = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Published = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -282,7 +287,7 @@ namespace JournalSystem.Migrations
                         column: x => x.TopicId,
                         principalTable: "Topics",
                         principalColumn: "TopicId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,10 +295,10 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -303,7 +308,7 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -311,11 +316,13 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -325,7 +332,7 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -333,12 +340,13 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
                     EditDecisionsId = table.Column<int>(type: "int", nullable: true),
                     Notify = table.Column<bool>(type: "bit", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     EditorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -376,7 +384,7 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hops_Reviewers_ReviewerId",
                         column: x => x.ReviewerId,
@@ -395,7 +403,8 @@ namespace JournalSystem.Migrations
                 name: "IX_ArticleTemplates_PaperId",
                 table: "ArticleTemplates",
                 column: "PaperId",
-                unique: true);
+                unique: true,
+                filter: "[PaperId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_FieldId",

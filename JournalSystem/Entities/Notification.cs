@@ -12,7 +12,7 @@ namespace JournalSystem.Entities
         public string Notification_Header { get; set; }
         public string Notification_Body { get; set; }
         public bool Is_Read { get; set; }
-        public DateTime Date_Created { get; set; }
+        public DateTime? Date_Created { get; set; }
 
     }
 }

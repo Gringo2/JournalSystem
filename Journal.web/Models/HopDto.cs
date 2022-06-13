@@ -8,7 +8,7 @@ namespace Journal.web.Models
         public Guid SenderId { get; set; }
         public Guid RecieverId { get; set; }
         public int StatusId { get; set; }
-        public int? EditDecisionsId { get; set; }
+        public int EditDecisionsId { get; set; }
         public bool Notify { get; set; }
         public DateTime Created { get; set; }
         public Guid PaperId { get; set; }

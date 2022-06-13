@@ -8,8 +8,12 @@ namespace Journal.web.ViewModel
 {
     public class UserViewModel
     {
-        public UserDto User { get; set; }
-        public Guid InstitutionId { get; set; }
-        public Guid RoleId { get; set; }
+       public string FName { get; set; }
+       public string LName { get; set; }
+       public string email { get; set; }
+       public string Institution { get; set; }
+       public string Field { get; set; }
+       public string Phone_number { get; set; }
+
     }
 }

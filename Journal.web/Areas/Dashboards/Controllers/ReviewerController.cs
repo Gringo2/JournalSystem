@@ -1,4 +1,6 @@
-﻿using Journal.web.Services;
+﻿using Journal.web.Areas.Dashboards.Models.ViewModel;
+using Journal.web.Models;
+using Journal.web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -33,16 +35,56 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
         [Route("")]
         [Route("index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var Papers = await _paperRequestService.Getall();
+            return View(new PaperViewModel
+            {
+                Papers = Papers
+            });
         }
+        // sends Comment to user
         [Route("Papers")]
         public IActionResult Papers()
         {
+            
             return View();
 
         }
+        //can also be action only
+        [Route("Comments")]
+        public IActionResult Comments()
+        {
+            var Comment = new CommentsDto
+            {
+
+            };
+
+             _commentRequestService.Insert(Comment);
+            return View();
+        }
+
+        // no views only action
+
+        [Route("BacktoEditor")]
+        public async Task<IActionResult> BackToEditor()
+        {
+            var idtoken = await HttpContext.GetTokenAsync("id_token");
+
+            var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
+
+            var claims = User.Claims.ToList();
+            var id = _idtoken.Claims.Single(x => x.Type == "sub");
+            var UserId = Guid.Parse(id.Value);
+
+            var Hop = new HopDto
+            {
+                SenderId = UserId
+
+            };
+            return View();
+        }
+
         [Route("Notifications")]
         public IActionResult Notifications()
         {
@@ -65,16 +107,9 @@ namespace Journal.web.Areas.Dashboards.Controllers
            
             return View();
         }
-        [Route("Comments")]
-        public IActionResult Comments()
-        {
-            return View();
-        }
-        [Route("GenerateHop")]
-        public IActionResult GenerateHop()
-        {
-            return View();
-        }
+
+        
+        
         [Route("EditDecisions")]
         public IActionResult EditDecisions()
         {

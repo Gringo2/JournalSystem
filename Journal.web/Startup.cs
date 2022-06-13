@@ -33,19 +33,23 @@ namespace Journal.web
 
             services.AddRazorPages();
 
+            services.AddHttpClient<IArticleTemplateService, ArticleTemplateService>();
+
+            services.AddHttpClient<IAuthorRequestService, AuthorRequestService>();
+
+            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>();
+
+            services.AddHttpClient<ICommentRequestService, CommentRequestService>();
+
+            services.AddHttpClient<ITopicRequestService, TopicRequestService>();
+
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<TokenInjectionService>();
 
             services.AddHttpClient<IPaperRequestService, PaperRequestService>();
 
-            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>();
-
             services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>();
-
-            services.AddHttpClient<ITopicRequestService, TopicRequestService>();
-
-            services.AddHttpClient<ICommentRequestService, CommentRequestService>();
 
             services.AddHttpClient<IHopRequestService, HopRequestService>();
 
@@ -53,7 +57,13 @@ namespace Journal.web
 
             services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
-            services.AddHttpClient<IArticleTemplateService, ArticleTemplateService>();
+            
+
+            services.AddHttpClient<IReviewerService, ReviewerService>();
+
+            
+
+            services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

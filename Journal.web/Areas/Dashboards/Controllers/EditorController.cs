@@ -1,4 +1,5 @@
-﻿using Journal.web.Models;
+﻿using Journal.web.Areas.Dashboards.Models.ViewModel;
+using Journal.web.Models;
 using Journal.web.Services;
 using Journal.web.ViewModel;
 using Microsoft.AspNetCore.Authentication;
@@ -35,19 +36,29 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
         [Route("")]
         [Route("index")]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var Papers = await _paperRequestService.Getall();
+            return View(new PaperViewModel
+            {
+                Papers = Papers
+            });
         }
-        [Route("Papers")]
-        public async Task<IActionResult> Papers()
-        {
-            return View();
+        //[Route("Papers")]
+        //public async Task<IActionResult> Papers()
+        //{
+        //    return View();
 
-        }
+        //}
         [Route("Notifications")] 
         public IActionResult Notifications()
         {
+            var notify = new NotificationDto
+            {
+
+            };
+
+            _notificationRequestService.Insert(notify);
             return View();
         }
         [Route("Profile")]
@@ -65,15 +76,24 @@ namespace Journal.web.Areas.Dashboards.Controllers
 
             return View();
         }
+
+        //sends comment to an author 
         [Route("Comments")]
-        public IActionResult Comments()
+        public IActionResult Comments(PaperDto paper)
         {
+            var Comment = new CommentsDto
+            {
+
+            };
+
+            _commentRequestService.Insert(Comment);
+
             return View();
         }
-        [Route("GenerateHop")]
-        public async Task<IActionResult> GenerateHop(Guid PaperId)
+        [Route("ForwardToReviewer")]
+        public async Task<IActionResult> ForwardToReviewer(PaperDto Paper)
         {
-            var Paper = _paperRequestService.GetById("");
+          
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var idtoken = await HttpContext.GetTokenAsync("id_token");
 
@@ -85,10 +105,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var UserId = Guid.Parse(id.Value);
 
             //required attributes to generate hop SenderId, User ID PaperId
-            //
             
-
-
 
             
 

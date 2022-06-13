@@ -52,8 +52,8 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
             var UserId = Guid.Parse(id.Value);
-            var role = _idtoken.Claims.Single(r => r.Type == "Roles");
-            var Email = _idtoken.Claims.Single();
+            var role = _idtoken.Claims.Single(r => r.Type == "roles");
+            var Email = _idtoken.Claims.Single(e => e.Type == "email");
 
             List<string> topic = new List<string>();
 

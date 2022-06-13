@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JournalSystem.Migrations
 {
-    public partial class _init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,26 +35,32 @@ namespace JournalSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Field",
+                name: "Fields",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FieldName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Specialization = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Field", x => x.Id);
+                    table.PrimaryKey("PK_Fields", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Institution",
+                name: "Institutions",
                 columns: table => new
                 {
                     InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Institution_website = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Institution", x => x.InstitutionId);
+                    table.PrimaryKey("PK_Institutions", x => x.InstitutionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,12 +69,12 @@ namespace JournalSystem.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     JournalName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Volume = table.Column<int>(type: "int", nullable: false),
-                    Issue_No = table.Column<int>(type: "int", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: true),
+                    Issue_No = table.Column<int>(type: "int", nullable: true),
                     Publisher = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    YearPublished = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    YearPublished = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,7 +89,7 @@ namespace JournalSystem.Migrations
                     Notification_Header = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notification_Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Is_Read = table.Column<bool>(type: "bit", nullable: false),
-                    Date_Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date_Created = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,7 +132,7 @@ namespace JournalSystem.Migrations
                     TopicName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -136,37 +142,100 @@ namespace JournalSystem.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Authors",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RoleId1 = table.Column<int>(type: "int", nullable: true)
+                    RoleId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Field_FieldId",
+                        name: "FK_Authors_Fields_FieldId",
                         column: x => x.FieldId,
-                        principalTable: "Field",
+                        principalTable: "Fields",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Institution_InstitutionId",
+                        name: "FK_Authors_Institutions_InstitutionId",
                         column: x => x.InstitutionId,
-                        principalTable: "Institution",
+                        principalTable: "Institutions",
                         principalColumn: "InstitutionId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId1",
-                        column: x => x.RoleId1,
+                        name: "FK_Authors_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Editors",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Editors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Editors_Fields_FieldId",
+                        column: x => x.FieldId,
+                        principalTable: "Fields",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Editors_Institutions_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institutions",
+                        principalColumn: "InstitutionId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Editors_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviewers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RoleId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviewers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviewers_Fields_FieldId",
+                        column: x => x.FieldId,
+                        principalTable: "Fields",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviewers_Institutions_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institutions",
+                        principalColumn: "InstitutionId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Reviewers_Roles_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "RoleId",
                         onDelete: ReferentialAction.Restrict);
@@ -179,25 +248,46 @@ namespace JournalSystem.Migrations
                     PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Abstract = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Version = table.Column<int>(type: "int", nullable: false),
-                    No_Pages = table.Column<int>(type: "int", nullable: false),
-                    HopCount = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Published = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Version = table.Column<int>(type: "int", nullable: true),
+                    No_Pages = table.Column<int>(type: "int", nullable: true),
+                    HopCount = table.Column<int>(type: "int", nullable: true),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EditorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReviewerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Published = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Papers", x => x.PaperId);
                     table.ForeignKey(
+                        name: "FK_Papers_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Papers_Editors_EditorId",
+                        column: x => x.EditorId,
+                        principalTable: "Editors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Papers_Reviewers_ReviewerId",
+                        column: x => x.ReviewerId,
+                        principalTable: "Reviewers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Papers_Topics_TopicId",
                         column: x => x.TopicId,
                         principalTable: "Topics",
                         principalColumn: "TopicId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,10 +295,10 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Version = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,7 +308,7 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -226,11 +316,13 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,7 +332,7 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,22 +340,37 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RecieverId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
                     EditDecisionsId = table.Column<int>(type: "int", nullable: true),
                     Notify = table.Column<bool>(type: "bit", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EditorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ReviewerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hops", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Hops_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Hops_EditDecisions_EditDecisionsId",
                         column: x => x.EditDecisionsId,
                         principalTable: "EditDecisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Hops_Editors_EditorId",
+                        column: x => x.EditorId,
+                        principalTable: "Editors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -277,50 +384,44 @@ namespace JournalSystem.Migrations
                         column: x => x.PaperId,
                         principalTable: "Papers",
                         principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Hops_Reviewers_ReviewerId",
+                        column: x => x.ReviewerId,
+                        principalTable: "Reviewers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hops_Statuses_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Hops_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaperUser",
-                columns: table => new
-                {
-                    PapersPaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaperUser", x => new { x.PapersPaperId, x.UsersUserId });
-                    table.ForeignKey(
-                        name: "FK_PaperUser_Papers_PapersPaperId",
-                        column: x => x.PapersPaperId,
-                        principalTable: "Papers",
-                        principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PaperUser_Users_UsersUserId",
-                        column: x => x.UsersUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleTemplates_PaperId",
                 table: "ArticleTemplates",
                 column: "PaperId",
-                unique: true);
+                unique: true,
+                filter: "[PaperId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authors_FieldId",
+                table: "Authors",
+                column: "FieldId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authors_InstitutionId",
+                table: "Authors",
+                column: "InstitutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Authors_RoleId",
+                table: "Authors",
+                column: "RoleId",
+                unique: true,
+                filter: "[RoleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PaperId",
@@ -328,9 +429,36 @@ namespace JournalSystem.Migrations
                 column: "PaperId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Editors_FieldId",
+                table: "Editors",
+                column: "FieldId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Editors_InstitutionId",
+                table: "Editors",
+                column: "InstitutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Editors_RoleId",
+                table: "Editors",
+                column: "RoleId",
+                unique: true,
+                filter: "[RoleId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hops_AuthorId",
+                table: "Hops",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hops_EditDecisionsId",
                 table: "Hops",
                 column: "EditDecisionsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hops_EditorId",
+                table: "Hops",
+                column: "EditorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hops_NotificationId",
@@ -345,14 +473,29 @@ namespace JournalSystem.Migrations
                 column: "PaperId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Hops_ReviewerId",
+                table: "Hops",
+                column: "ReviewerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hops_StatusId",
                 table: "Hops",
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Hops_UserId",
-                table: "Hops",
-                column: "UserId");
+                name: "IX_Papers_AuthorId",
+                table: "Papers",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Papers_EditorId",
+                table: "Papers",
+                column: "EditorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Papers_ReviewerId",
+                table: "Papers",
+                column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Papers_TopicId",
@@ -360,29 +503,26 @@ namespace JournalSystem.Migrations
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaperUser_UsersUserId",
-                table: "PaperUser",
-                column: "UsersUserId");
+                name: "IX_Reviewers_FieldId",
+                table: "Reviewers",
+                column: "FieldId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviewers_InstitutionId",
+                table: "Reviewers",
+                column: "InstitutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviewers_RoleId",
+                table: "Reviewers",
+                column: "RoleId",
+                unique: true,
+                filter: "[RoleId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_CategoryId",
                 table: "Topics",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_FieldId",
-                table: "Users",
-                column: "FieldId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_InstitutionId",
-                table: "Users",
-                column: "InstitutionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId1",
-                table: "Users",
-                column: "RoleId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -400,31 +540,34 @@ namespace JournalSystem.Migrations
                 name: "Issues");
 
             migrationBuilder.DropTable(
-                name: "PaperUser");
-
-            migrationBuilder.DropTable(
                 name: "EditDecisions");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
-                name: "Statuses");
-
-            migrationBuilder.DropTable(
                 name: "Papers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Statuses");
+
+            migrationBuilder.DropTable(
+                name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "Editors");
+
+            migrationBuilder.DropTable(
+                name: "Reviewers");
 
             migrationBuilder.DropTable(
                 name: "Topics");
 
             migrationBuilder.DropTable(
-                name: "Field");
+                name: "Fields");
 
             migrationBuilder.DropTable(
-                name: "Institution");
+                name: "Institutions");
 
             migrationBuilder.DropTable(
                 name: "Roles");

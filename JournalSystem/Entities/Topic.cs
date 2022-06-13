@@ -10,7 +10,7 @@ namespace JournalSystem.Entities
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public IEnumerable<Paper> Papers { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         public Category Category { get; set; }
 
     }

@@ -24,7 +24,7 @@ namespace JournalSystem.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<HopDto>>> GetAll()
         {
             IEnumerable<Hop> hops = await _hopRepo.GetAll();

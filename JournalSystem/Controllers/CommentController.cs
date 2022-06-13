@@ -26,7 +26,7 @@ namespace JournalSystem.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CommentsDto>>> GetAll()
         {
             IEnumerable<Comments> comments = await _commentsRepo.GetAll();

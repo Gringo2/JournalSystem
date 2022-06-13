@@ -21,12 +21,23 @@ namespace JournalSystem.ExtensionMethods
                 var context = services.GetService<DataDbContext>();
 
                 // now we have the DbContext. Run migrations
-                //context.Database.Migrate();
+                context.Database.Migrate();
 
                 // now that the database is up to date. Let's seed
+                new RoleSeeder(context).SeedData();
                 new CategorySeeder(context).SeedData();
                 new TopicSeeder(context).SeedData();
+                new EditDecisionsSeeder(context).SeedData();
+                new FieldSeeder(context).SeedData();
+                new InstitutionSeeder(context).SeedData();
+                new StatusSeeder(context).SeedData();
+                new NotificationSeeder(context).SeedData();
                 new PaperSeeder(context).SeedData();
+                new HopSeeder(context).SeedData();
+                new CommentSeeder(context).SeedData();
+                new IssueSeeder(context).SeedData();
+                
+                
 
 #if DEBUG
                 // if we are debugging, then let's run the test data seeder

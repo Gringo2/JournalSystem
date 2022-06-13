@@ -22,7 +22,7 @@ namespace JournalSystem.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<ReviewerDto>>> GetAll()
         {
             IEnumerable<Reviewer> categories = await _reviewerRepo.GetAll();

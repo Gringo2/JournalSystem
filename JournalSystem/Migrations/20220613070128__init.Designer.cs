@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JournalSystem.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20220610165113__Modify")]
-    partial class _Modify
+    [Migration("20220613070128__init")]
+    partial class _init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -133,7 +133,7 @@ namespace JournalSystem.Migrations
                     b.Property<int?>("EditDecisionsId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("NotificationId")
+                    b.Property<Guid?>("NotificationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Notify")
@@ -145,7 +145,7 @@ namespace JournalSystem.Migrations
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("StatusId")
+                    b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
@@ -156,7 +156,8 @@ namespace JournalSystem.Migrations
                     b.HasIndex("EditDecisionsId");
 
                     b.HasIndex("NotificationId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[NotificationId] IS NOT NULL");
 
                     b.HasIndex("PaperId");
 
@@ -173,9 +174,44 @@ namespace JournalSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Institutiion_Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("InstitutionId");
 
                     b.ToTable("Institution");
+                });
+
+            modelBuilder.Entity("JournalSystem.Entities.Issue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Issue_No")
+                        .HasColumnType("int");
+
+                    b.Property<string>("JournalName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Publisher")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Volume")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("YearPublished")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Issues");
                 });
 
             modelBuilder.Entity("JournalSystem.Entities.Notification", b =>
@@ -247,6 +283,21 @@ namespace JournalSystem.Migrations
                     b.ToTable("Papers");
                 });
 
+            modelBuilder.Entity("JournalSystem.Entities.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("JournalSystem.Entities.Status", b =>
                 {
                     b.Property<int>("Id")
@@ -299,20 +350,25 @@ namespace JournalSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FieldId")
+                    b.Property<Guid?>("FieldId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("InstitutionId")
+                    b.Property<Guid?>("InstitutionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("RoleId1")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId");
 
                     b.HasIndex("FieldId");
 
                     b.HasIndex("InstitutionId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("Users");
                 });
@@ -362,9 +418,7 @@ namespace JournalSystem.Migrations
 
                     b.HasOne("JournalSystem.Entities.Notification", "Notifications")
                         .WithOne("Hop")
-                        .HasForeignKey("JournalSystem.Entities.Hop", "NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JournalSystem.Entities.Hop", "NotificationId");
 
                     b.HasOne("JournalSystem.Entities.Paper", "Paper")
                         .WithMany("Hops")
@@ -374,9 +428,7 @@ namespace JournalSystem.Migrations
 
                     b.HasOne("JournalSystem.Entities.Status", "Status")
                         .WithMany("Hops")
-                        .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StatusId");
 
                     b.HasOne("JournalSystem.Entities.User", "User")
                         .WithMany("Hops")
@@ -421,19 +473,21 @@ namespace JournalSystem.Migrations
                 {
                     b.HasOne("JournalSystem.Entities.Field", "Field")
                         .WithMany("Users")
-                        .HasForeignKey("FieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FieldId");
 
                     b.HasOne("JournalSystem.Entities.Institution", "Institution")
                         .WithMany("Users")
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InstitutionId");
+
+                    b.HasOne("JournalSystem.Entities.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId1");
 
                     b.Navigation("Field");
 
                     b.Navigation("Institution");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("PaperUser", b =>

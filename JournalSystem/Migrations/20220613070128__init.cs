@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JournalSystem.Migrations
 {
-    public partial class _Modify : Migration
+    public partial class _init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,11 +49,30 @@ namespace JournalSystem.Migrations
                 name: "Institution",
                 columns: table => new
                 {
-                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Institutiion_Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Institution", x => x.InstitutionId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Issues",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JournalName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Volume = table.Column<int>(type: "int", nullable: false),
+                    Issue_No = table.Column<int>(type: "int", nullable: false),
+                    Publisher = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YearPublished = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Issues", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,6 +88,19 @@ namespace JournalSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.RoleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,9 +144,10 @@ namespace JournalSystem.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    InstitutionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    FieldId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RoleId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,13 +157,19 @@ namespace JournalSystem.Migrations
                         column: x => x.FieldId,
                         principalTable: "Field",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_Institution_InstitutionId",
                         column: x => x.InstitutionId,
                         principalTable: "Institution",
                         principalColumn: "InstitutionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId1",
+                        column: x => x.RoleId1,
+                        principalTable: "Roles",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,12 +250,12 @@ namespace JournalSystem.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: true),
                     EditDecisionsId = table.Column<int>(type: "int", nullable: true),
                     Notify = table.Column<bool>(type: "bit", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaperId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    NotificationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,7 +271,7 @@ namespace JournalSystem.Migrations
                         column: x => x.NotificationId,
                         principalTable: "Notifications",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hops_Papers_PaperId",
                         column: x => x.PaperId,
@@ -244,7 +283,7 @@ namespace JournalSystem.Migrations
                         column: x => x.StatusId,
                         principalTable: "Statuses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Hops_Users_UserId",
                         column: x => x.UserId,
@@ -297,7 +336,8 @@ namespace JournalSystem.Migrations
                 name: "IX_Hops_NotificationId",
                 table: "Hops",
                 column: "NotificationId",
-                unique: true);
+                unique: true,
+                filter: "[NotificationId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hops_PaperId",
@@ -338,6 +378,11 @@ namespace JournalSystem.Migrations
                 name: "IX_Users_InstitutionId",
                 table: "Users",
                 column: "InstitutionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId1",
+                table: "Users",
+                column: "RoleId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -350,6 +395,9 @@ namespace JournalSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Hops");
+
+            migrationBuilder.DropTable(
+                name: "Issues");
 
             migrationBuilder.DropTable(
                 name: "PaperUser");
@@ -377,6 +425,9 @@ namespace JournalSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Institution");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Categories");

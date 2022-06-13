@@ -21,13 +21,13 @@ namespace JournalSystem.Context
        // public DbSet<Field> Field { get; set; }
         public DbSet<Hop> Hops { get; set; }
         //public DbSet<Institution> Institutions { get; set; }
-        public DbSet<Issues> Issue { get; set; }
+        public DbSet<Issue> Issues { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Paper> Papers { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
-       
+        public DbSet<Role> Roles { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

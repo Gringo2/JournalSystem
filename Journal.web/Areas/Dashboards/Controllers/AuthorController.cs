@@ -43,6 +43,17 @@ namespace Journal.web.Areas.Dashboards.Controllers
         [Route("index")]
         public async Task<IActionResult> Index() {
             var Papers = await _paperRequestService.Getall();
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var idtoken = await HttpContext.GetTokenAsync("id_token");
+
+            var _accesstoken = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
+            var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
+
+            var claims = User.Claims.ToList();
+            var id = _idtoken.Claims.Single(x => x.Type == "sub");
+            var UserId = Guid.Parse(id.Value);
+            var role = _idtoken.Claims.Single(r => r.Type == "Roles");
+            var Email = _idtoken.Claims.Single();
 
             List<string> topic = new List<string>();
 

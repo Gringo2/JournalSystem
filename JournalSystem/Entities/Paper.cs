@@ -28,5 +28,4 @@ namespace JournalSystem.Entities
         public ArticleTemplate ArticleTemplate { get; set; }
         public IEnumerable<Comments> Comments { get; set; }
     }
-
 }

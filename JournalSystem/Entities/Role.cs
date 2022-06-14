@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JournalSystem.Entities
 {
@@ -6,8 +7,8 @@ namespace JournalSystem.Entities
     {
         public int RoleId { get; set; }
         public string RoleName { get; set; }
-        public Author Author { get; set; }
-        public Editor Editor { get; set; }
-        public Reviewer Reviewer { get; set; }
+        public IEnumerable<Author> Authors { get; set; }
+        public IEnumerable<Editor> Editors { get; set; }
+        public IEnumerable<Reviewer> Reviewers { get; set; }
     }
 }

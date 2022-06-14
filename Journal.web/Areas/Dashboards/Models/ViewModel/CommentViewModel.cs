@@ -9,7 +9,6 @@ namespace Journal.web.Areas.Dashboards.Models.ViewModel
     public class CommentViewModel
     {
         public CommentsDto Comment { get; set; }
-        public Guid PaperId { get; set; }
-        public String SenderRole { get; set; }
+        public PaperDto Paper { get; set; }
     }
 }

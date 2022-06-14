@@ -81,19 +81,6 @@ namespace Journal.web.Areas.Dashboards.Controllers
             });
         }
 
-        [Route("Notifications")]
-        public IActionResult Notifications()
-        {
-            var notify = new NotificationDto
-            {
-
-            };
-
-            _notificationRequestService.Insert(notify);
-
-            return View();
-
-        }
 
         [Route("Profile")]
         public async Task<IActionResult> Profile()
@@ -107,12 +94,12 @@ namespace Journal.web.Areas.Dashboards.Controllers
             var claims = User.Claims.ToList();
             var id = _idtoken.Claims.Single(x => x.Type == "sub");
             var UserId = Guid.Parse(id.Value);
-            var role  = _idtoken.Claims.Single(r => r.Type == "roles");
+            //var role  = _idtoken.Claims.Single(r => r.Type == "roles");
             
-            var email = _idtoken.Claims.Single(e => e.Type == "email");
-            var phone = _idtoken.Claims.Single(e => e.Type == "phone");
-            var fname = _idtoken.Claims.Single(n => n.Type == "firstname");
-            var lname = _idtoken.Claims.Single(l => l.Type == "lastname");
+            var email = _idtoken.Claims.FirstOrDefault(e => e.Type == "email");
+            var phone = _idtoken.Claims.FirstOrDefault(e => e.Type == "phone");
+            var fname = _idtoken.Claims.FirstOrDefault(n => n.Type == "firstname");
+            var lname = _idtoken.Claims.FirstOrDefault(l => l.Type == "lastname");
 
 
 
@@ -121,8 +108,7 @@ namespace Journal.web.Areas.Dashboards.Controllers
                 FName = fname.Value,
                 LName = lname.Value,
                 email = email.Value,
-                Phone_number = phone.Value,
-                Role  = role.Value
+                Phone_number = phone.Value
 
             });
         }

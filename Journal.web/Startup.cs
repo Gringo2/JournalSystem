@@ -57,11 +57,9 @@ namespace Journal.web
 
             services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
-            
+            services.AddHttpClient<IEditorService, EditorService>();
 
             services.AddHttpClient<IReviewerService, ReviewerService>();
-
-            
 
             services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
@@ -81,11 +79,15 @@ namespace Journal.web
                options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                options.ResponseType = "code";
                options.Scope.Add("roles");
+               options.Scope.Add("lastname");
                options.SaveTokens = true;
                options.GetClaimsFromUserInfoEndpoint = true;
                options.ClaimActions.MapUniqueJsonKey("role", "role", "role");
                options.TokenValidationParameters.NameClaimType = "name";
                options.TokenValidationParameters.RoleClaimType = "role";
+               options.TokenValidationParameters.NameClaimType = "firstname";
+               options.TokenValidationParameters.NameClaimType = "lastname";
+               
            });
         }
 

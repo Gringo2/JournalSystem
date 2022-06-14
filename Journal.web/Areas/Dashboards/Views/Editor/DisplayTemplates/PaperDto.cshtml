@@ -47,4 +47,30 @@
                           </div>
                         </div>
                </td>
+     </td>
+      <td class="align-middle">
+                        <div class="progress-wrapper w-50 mx-auto">
+                          <div class="row mt-4 text-center">
+                <div class="" >
+                    <form class="form" asp-area="Dashboards" asp-action="ForwardToReviewer" asp-controller="Editor">
+                        <div class="">
+                           @*<label class="columnHeader mt-2">QUANTITY:</label>*@
+                           @* <select name="Amount" class="ml-5 w-25">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>*@
+                            
+                            <input name="Id" asp-for="PaperId"  type="hidden"/>
+                            @*<input name="Price" asp-for="P" type="hidden" />*@
+                            <button type="submit" class="filterButton text-center " style="word-wrap:normal; min-width: 110px; align-self:center" ></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+                          </div>
+                        </div>
+               </td>
     </tr>

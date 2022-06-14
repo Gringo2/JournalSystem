@@ -67,7 +67,7 @@ namespace Auth
                     PostLogoutRedirectUris = { "https://localhost:44227/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile","roles", "phone" ,"scope2","lastname", "firstname" }
+                    AllowedScopes = { "openid", "profile","roles", "phone" , "lastname", "firstname", "scope2" }
                 },
             };
 

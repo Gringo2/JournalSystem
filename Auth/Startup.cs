@@ -131,15 +131,15 @@ namespace Auth
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             IdentityResult adminRoleResult;
-            bool adminRoleExists = await RoleManager.RoleExistsAsync("Author");
+            bool adminRoleExists = await RoleManager.RoleExistsAsync("Reviewer");
 
             if (!adminRoleExists)
             {
-                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Author"));
+                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Reviewer"));
             }
 
-            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("ELIHUGECH@GMAIL.COM");
-            await UserManager.AddToRoleAsync(userToMakeAdmin, "Author");
+            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("JHONSNOW@GMAIL.COM");
+            await UserManager.AddToRoleAsync(userToMakeAdmin, "Reviewer");
         }
 
 

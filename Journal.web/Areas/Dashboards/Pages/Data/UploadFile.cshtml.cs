@@ -2,6 +2,7 @@ using Journal.web.Areas.Dashboards.Models.ViewModel;
 using Journal.web.Models;
 using Journal.web.Services;
 using Journal.web.ViewModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,11 +22,14 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
         
         private readonly IPaperRequestService _paperRequestService;
         private readonly ITopicRequestService _topicRequestService;
-
-        public UploadFileModel(IPaperRequestService paperRequestService, ITopicRequestService topicRequestService)
+        private readonly IHopRequestService _hopRequestService;
+        
+        public UploadFileModel(IPaperRequestService paperRequestService, ITopicRequestService topicRequestService,
+                                IHopRequestService hopRequestService)
         {
             _paperRequestService = paperRequestService;
             _topicRequestService = topicRequestService;
+            _hopRequestService = hopRequestService;
         }
 
         [BindProperty]
@@ -45,11 +50,9 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
             [StringLength(100)]
             [Display(Name = "Abstract")]
             public string Abstract { get; set; }
-            [Required]
-            [StringLength(100)]
-            [BindProperty]
-            public string SelectedTopic { get; set; }
-
+         
+            [Display(Name = "SelectTopic")]
+            public TopicDto SelectedTopic { get; set; }
             [Required]
             public IFormFile Upload { get; set; }
 
@@ -67,12 +70,29 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
                                       Value = a.TopicId.ToString(),
                                       Text =  a.TopicName
                                   }).ToList();
-            //Options.Insert(0, new SelectListItem { Value = "", Text = "SelectTopics" });
+            Options.Insert(0, new SelectListItem { Value = "", Text = "Topics" });
         }
 
         public async Task<IActionResult> OnPostAsync(string ReturnUrl = null)
         {
-            Guid topicId = Guid.Parse(Input.SelectedTopic);
+            // extract user id from id token 
+            var idtoken = await HttpContext.GetTokenAsync("id_token");
+
+            var _idtoken = new JwtSecurityTokenHandler().ReadJwtToken(idtoken);
+
+            var claims = User.Claims.ToList();
+            var id = _idtoken.Claims.Single(x => x.Type == "sub");
+            var UserId = Guid.Parse(id.Value);
+            var Hop = new HopDto
+            {
+                SenderId = UserId
+
+            };
+               
+
+            await _hopRequestService.Insert(Hop);
+            
+            Guid topicId = Input.SelectedTopic.TopicId;
             ReturnUrl ??= Url.Content("/Dashboards/Author");
             var Paper = new PaperDto
             {
@@ -105,7 +125,10 @@ namespace Journal.web.Areas.Dashboards.Pages.Data
                 }
 
             }
+
             await _paperRequestService.Insert(Paper);
+
+
             return LocalRedirect(ReturnUrl);
 
         }

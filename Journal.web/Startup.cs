@@ -33,19 +33,23 @@ namespace Journal.web
 
             services.AddRazorPages();
 
+            services.AddHttpClient<IArticleTemplateService, ArticleTemplateService>();
+
+            services.AddHttpClient<IAuthorRequestService, AuthorRequestService>();
+
+            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>();
+
+            services.AddHttpClient<ICommentRequestService, CommentRequestService>();
+
+            services.AddHttpClient<ITopicRequestService, TopicRequestService>();
+
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<TokenInjectionService>();
 
             services.AddHttpClient<IPaperRequestService, PaperRequestService>();
 
-            services.AddHttpClient<ICategoryRequestService, CategoryRequestService>();
-
             services.AddHttpClient<IInstitutionRequestService, InstitutionRequestService>();
-
-            services.AddHttpClient<ITopicRequestService, TopicRequestService>();
-
-            services.AddHttpClient<ICommentRequestService, CommentRequestService>();
 
             services.AddHttpClient<IHopRequestService, HopRequestService>();
 
@@ -53,7 +57,11 @@ namespace Journal.web
 
             services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
-            services.AddHttpClient<IArticleTemplateService, ArticleTemplateService>();
+            services.AddHttpClient<IEditorService, EditorService>();
+
+            services.AddHttpClient<IReviewerService, ReviewerService>();
+
+            services.AddHttpClient<IEditDecisionService, EditDecisionService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -71,11 +79,15 @@ namespace Journal.web
                options.ClientSecret = "49C1A7E1-0C79-4A89-A3D6-A37998FB86B0";
                options.ResponseType = "code";
                options.Scope.Add("roles");
+               options.Scope.Add("lastname");
                options.SaveTokens = true;
                options.GetClaimsFromUserInfoEndpoint = true;
                options.ClaimActions.MapUniqueJsonKey("role", "role", "role");
                options.TokenValidationParameters.NameClaimType = "name";
                options.TokenValidationParameters.RoleClaimType = "role";
+               options.TokenValidationParameters.NameClaimType = "firstname";
+               options.TokenValidationParameters.NameClaimType = "lastname";
+               
            });
         }
 

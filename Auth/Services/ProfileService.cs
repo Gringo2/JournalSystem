@@ -39,6 +39,9 @@ namespace Auth.Services
             var lname = new Claim("lastname", user.LastName);
             var phone = new Claim("phone", user.PhoneNumber);
             var result = _userManager.AddClaimAsync(user,phone);
+            await _userManager.AddClaimAsync(user, fname);
+            await _userManager.AddClaimAsync(user, lname);
+
             List<Claim> claims = userClaims.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
             

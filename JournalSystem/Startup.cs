@@ -73,7 +73,7 @@ namespace JournalSystem
             //       //validate that the token is valid to be used with this api (aka audience)
             //       options.Audience = "scope1";
 
-            //    });
+                });
 
         }
 
